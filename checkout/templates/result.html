@@ -1,0 +1,12 @@
+{% extends "catalog/base.html" %}
+
+{% block body %}
+<div class='section-title'><h2></h2></div>
+{{result}}
+{% if result == 'success' %}
+  <p>Your order resulted in success</p>
+  {% endif %}
+  {% if result == 'fail' %}
+  <p>Your order unfortunately was not a success</p>
+  {% endif %}
+{% endblock %}

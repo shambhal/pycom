@@ -1,0 +1,17 @@
+{% extends "catalog/base.html" %}
+
+{% block title%} Service {% endblock%}
+{% block body%}
+<div class='container'>
+   <form method="post" action={{action}}>
+   <input type='hidden' name="order_id" value='{{order_id}}'/>
+   <input type='hidden' name='ott' value='{{ott}}'/>
+<button class='btn btn-primary'>Submit</button>
+   </form>
+
+
+
+
+</div>
+
+{% endblock body%}

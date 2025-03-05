@@ -1,0 +1,163 @@
+{% load i18n static %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
+<head>
+<title>{% block title %}{% endblock %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+<link rel="stylesheet" href="{% static "admin/stylesheet/bootstrap.css" %}">
+<link rel="stylesheet" href="{% static "admin/fontawesome/css/all.min.css"%}" />
+<link rel="stylesheet" href="{% static "admin/stylesheet/stylesheet.css" %}">
+<script src="{% static "admin/javascript/jquery/jquery-3.7.1.min.js" %}" ></script>
+<script>
+
+
+</script>
+<script type="text/javascript" src="{% static "admin/javascript/jquery/datetimepicker/moment.min.js" %}"></script>
+<script type="text/javascript" src1="{% static "admin/javascript/jquery/datetimepicker/moment-with-locales.min.js" %}"></script>
+<link href="{% static "admin/javascript/jquery/datetimepicker/daterangepicker.css" %}" rel="stylesheet" type="text/css"/>
+<link href1="{% static "jquery/datetimepicker/bootstrap-datetimepicker.min.css" %}" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="{% static "admin/javascript/jquery/datetimepicker/daterangepicker.js" %}"></script>
+
+<script type="text/javascript" src1="{% static "jquery/datetimepicker/bootstrap-datetimepicker.js" %}"></script>
+
+<script type="text/javascript" src="{% static "admin/javascript/common.js" %}"></script>
+<!--<link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">-->
+{% block dark-mode-vars %}
+  <link rel="stylesheet" href1="{% static "admin/css/dark_mode.css" %}">
+  <script src="{% static "admin/js/theme.js" %}" defer></script>
+{% endblock %}
+{% if not is_popup and is_nav_sidebar_enabled %}
+  <link rel="stylesheet" href="{% static "admin/css/nav_sidebar.css" %}">
+  <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
+{% endif %}
+{% block extrastyle %}{% endblock %}
+{% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">
+{% endif %}
+{% block extrahead %}{% endblock %}
+{% block responsive %}
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="{% static "admin/css/responsive.css" %}">
+    {% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% static "admin/css/responsive_rtl.css" %}">{% endif %}
+{% endblock %}
+{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+</head>
+
+<!--<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+  data-admin-utc-offset="{% now "Z" %}">-->
+  <body>
+
+<!-- Container -->
+<div id="container">
+  <div id="alert" class="toast-container position-fixed top-0 end-0 p-3"></div>
+    {% if not is_popup %}
+    <!-- Header -->
+    {% block header %}
+    <header id="header" class="navbar navbar-expand navbar-light bg-light">
+      <div class="container-fluid">
+        <a href="{{ home }}" class="navbar-brand d-none d-lg-block"><img src="view/image/logo.png" alt="{{ heading_title }}" title="{{ heading_title }}"/></a>
+        <div id="branding">
+          
+        {% block branding %}{% endblock %}
+        </div>
+        {% block usertools %} {% endblock%}
+        {% if has_permission %}
+        <button type="button" id="button-menu" class="btn btn-link d-inline-block d-lg-none"><i class="fa-solid fa-bars"></i></button>
+        <ul class="nav navbar-nav">
+          {% if user.is_active and user.is_staff %}
+         
+          <li id="nav-profile" class="nav-item dropdown">
+            <a href="#" data-bs-toggle="dropdown" class="nav-link dropdown-toggle"><img src="{{ image }}" alt="{% firstof user.get_short_name user.get_username %}" title="{% firstof user.get_short_name user.get_username %}" class="rounded-circle"/><span class="d-none d-md-inline d-lg-inline">&nbsp;&nbsp;&nbsp;{% firstof user.get_short_name user.get_username %} <i class="fa-solid fa-caret-down fa-fw"></i></span></a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              {% if user.has_usable_password %}
+              <li><a href="{% url 'admin:password_change' %}" class="dropdown-item"><i class="fa-solid fa-user-circle fa-fw"></i> {% translate 'Change password' %}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              {% endif %}
+              <li id="nav-logout" class="nav-item"><form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+                {% csrf_token %}<button class="nav-link"><i class="fa-solid fa-sign-out"></i> <span class="d-none d-md-inline">{% translate 'Log out' %}</span></button></form></li>
+            </ul>
+         
+          </li>
+         
+             {% endif %}
+
+        </ul>
+        {% endif %}
+        
+       
+               
+               
+              
+             
+                
+     
+      
+        {% block nav-global %}{% endblock %}
+      </div>
+      <div class='clearfix clear-fix'></div>
+    </header>
+    {% endblock %}
+    <!-- END Header -->
+   
+    {% endif %}
+{% if not is_popup and is_nav_sidebar_enabled %}
+        {% block nav-sidebar %}
+          {% include "admin/nav_sidebar.html" %}
+        {% endblock %}
+      {% endif %}
+    <div classs="main" idd="content">
+      <div class="page-header">
+        
+        
+    
+    </div>
+
+  </div>
+  <div style="clear:both"></div>
+      <div id="content-start" class="content" tabindex="-1">
+        <div class='container-fluid'>
+        {% block messages %}
+          {% if messages %}
+            <ul class="messagelist">{% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+            {% endfor %}</ul>
+          {% endif %}
+        {% endblock messages %}
+        <!-- Content -->
+        <div idd="content">
+          {% block sidebar %}{% endblock %}
+          <div  style="margin-left:250px">
+            {% block nav-breadcrumbs %}
+            <nav aria-label="{% translate 'Breadcrumbs' %}">
+              {% block breadcrumbs %}
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">   <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+                  {% if title %} &rsaquo; {{ title }}{% endif %}</li>
+                </ol>
+              {% endblock %}
+            </nav>
+          {% endblock %}
+          {% block pretitle %}{% endblock %}
+          {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+          {% block content_subtitle %}{% if subtitle %} <h2 class="mb-3">{{ subtitle }}</h2>{% endif %}{% endblock %}
+          {% block content %}
+        
+
+            {% block object-tools %}{% endblock %}
+            {{ content }}
+          </div>
+          {% endblock %}
+        
+          <br class="clear">
+        </div>
+        <!-- END Content -->
+        {% block footer %}<div id="footer"></div>{% endblock %}
+      </div>
+      </div>
+    
+</div>
+<!-- END Container -->
+
+<!-- SVGs -->
+<script type="text/javascript" src="{% static "admin/javascript/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+</body>
+</html>

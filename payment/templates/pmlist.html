@@ -1,0 +1,24 @@
+{% extends "catalog/base.html" %}
+
+{% block title%}Cart {% endblock%}
+{% block body%}
+<div class="section-title"><h2>Select Payment Method</h2></div>
+{% if pm|length > 0 %}
+<form method="post">
+    {% csrf_token %}
+
+           {% for p in pm %}
+           <div>
+           <input type='radio' name="pmethod" value="{{p.name}}"/>{{p.name}}
+
+           </div>
+
+           {% endfor%}
+
+</form>
+
+{% else %}
+No Payment Methods described
+{% endif%}
+
+{% endblock%}

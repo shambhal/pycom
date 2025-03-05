@@ -1,0 +1,43 @@
+{% load i18n %}
+
+{% if app_list %}
+<nav id="column-left">
+  <ul id="menu">
+ 
+ 
+       {% for model in app_list %}
+            {#  model.add_url  1==1 % #}
+            {% if 1 %}
+              <li  id="menu-{{model.name}}" >
+              <a href="#collapse-{{model.object_name}}" data-bs-toggle="collapse" class="parent collapsed">
+                <i class="fa fw {{model.icon}}"></i> 
+                   {{ model.name }}
+                  
+                 </a>
+                 <ul id="collapse-{{model.object_name}}" class="collapse">
+                         {% if model.add_url %}
+                         <li >
+                           <a href="{{ model.add_url }}" >{% translate 'Add' %}</a>
+
+                         </li>
+                         {% endif %}
+                        
+                          {% if model.admin_url  %}
+              {% if model.view_only %}
+                  <li ><a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %}</a></li>
+              {% else %}
+                <li><a href="{{ model.admin_url }}" class="changelink">{% translate 'Change' %}</a></li>
+              {% endif %}
+            {% elif show_changelinks %}
+             <li></li>
+            {% endif %}
+
+
+                         </ul>
+              </li>
+      {% endif %}<!--hide custom menu-->
+       {% endfor %}
+      
+            </ul>
+            </nav>
+    {% endif%}

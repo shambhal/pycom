@@ -1,0 +1,543 @@
+{% extends "catalog/base.html" %}
+
+{% block title%} Service {{seo_title}}{% endblock%}
+{% block extrahead %}
+<script type="text/javascript" src="/static/admin/javascript/jquery/datetimepicker/moment.min.js"></script>
+<script type="text/javascript" src1="/static/admin/javascript/jquery/datetimepicker/moment-with-locales.min.js"></script>
+<link href="/static/admin/javascript/jquery/datetimepicker/daterangepicker.css" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript" src="/static/admin/javascript/jquery/datetimepicker/daterangepicker.js"></script>
+
+
+{% endblock %}
+{% block body%}
+<style>
+    .cell 
+    {
+    height:35px;
+    padding:10px 5px;
+    background-color:#f1f1f1;
+    color:#a1a1a	;
+    display:block;
+    width:180px;
+    float:left;
+    font-size:16px;
+    }
+    .busy{
+    background-color:red!important;
+    color:white!important
+    
+    }
+    .schdata{
+    
+    
+    border:1px solid #a2a2a2;
+    color:#a1a1a	;
+    display:block;
+    width:180px;
+    float:left;
+    
+    }
+    .tcell{
+    padding:10px;
+    height:40px;
+    background-color:#f1f1f1;
+    border-top:1px solid #a1a1a1;
+    text-align:center;
+    }
+    .cell2
+    {
+    display:block;
+    height:40px;
+    background-color:#bee3db;
+    color:black;
+    padding-top:10px;
+    text-align:center;
+    border-bottom:1px solid #a1a1a1;
+    
+    }
+    .time-header{
+    width1:40px;
+    color1:#DADEE5;
+    text-align:center;
+    background-color:#f1f1f1;
+    border-bottom:1px solid #f8f8f8;
+    }
+    .cell-header{
+    height:30px;
+    
+    padding:5px 0px;
+    
+    
+    </style>
+    {% include 'notification.html' %}
+   
+    <div class='container'>
+      {{chunk}}
+              <div class='row'>
+                      <div class='col-sm-2'>
+                <div class=' time-header tcell'><i class="fa fa-clock-o"></i></div>
+                <div id='timeline'></div>
+                  
+         
+         </div>
+
+           <div class='col-sm-10'>
+           <div class='section-title'> <h2>{{name}}</h2></div>
+            <div id="daydata">
+              <div class='cell-header'>
+	      
+              </div>
+              <div style='clear:left'></div>
+              <div class="celldata">
+		
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+           </div>
+
+              </div>
+
+
+
+    </div> 
+    <script>
+      var shaap={
+        dt:[],
+        timearr:[],
+        //busyarr
+        bsarr:{},
+        //formatted time arr with am pm
+        ftimearr:[],
+        //pricarr
+        pricearr:[],
+        //datearr
+        dtarr:{},
+        //special day off hours
+        spoff:{},
+        currency:{},
+        //normal off hours
+        off:{},
+        formatPrice:function(price)
+        {
+          /*let locale = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });*/
+        console.log(this.currency);
+        console.log(this.currency.locale);
+        let locale = new Intl.NumberFormat(this.currency.locale, {
+          style: 'currency',
+          currency:this.currency.currency_code,
+      });
+         return locale.format(price);
+
+        },
+        addDate:function(dt)
+        {
+         this.dt.push(dt);
+        
+        },
+        getDate:function()
+        {
+        return this.dt;
+        
+        },
+        _loadinner(i,max,dtarr)
+        {self=this;
+                if(i==max)
+                {
+
+               this.drawSchedule();
+                  return
+                }
+          $.ajax({
+         
+            url:'{%url 'service:schedule' id  %}?dated='+dtarr[i],
+            type: 'get',
+           
+            dataType: 'json',
+           
+            complete: function() {
+             
+            },
+            success:function(json)
+            {
+              //alert("in load inner");
+             
+              console.log(json)
+              timings=json.routine.hours
+             // console.log(json.routine.hours)
+            
+             self.daydata({'sp':json.sp,date:dtarr[i],timings:json.routine.hours,busy1:'09:30-10:30,11:30-12:00' ,busy:json.book,'spoff':json.spoff});
+             
+              if(i<max)
+              {
+                  i=i+1;
+                 self._loadinner(i,max,dtarr)
+
+              }
+            
+
+            }
+
+          });
+
+
+
+        },
+        loadDates:function(dates)
+        {
+          self=this;
+
+          dtarr=dates.split(",")
+          i=0;
+          this._loadinner(i,dtarr.length,dtarr)
+           
+              
+        },
+        
+        getTimeline:function(options)
+        {
+        
+         start=options.start?options.start:0;
+          end=options.end?options.end:23;
+          smin=options.smin?options.smin:0
+          emin=options.emin?options.emin:0;
+         
+               var dt=new Date()
+        dt.setYear(2021);
+        dt.setMonth(12);
+        dt.setDate(15);
+        
+        dt.setHours(start);
+        dt.setMinutes(smin);
+        dt.setSeconds(0);
+               i=0;
+        var farr=[];
+        var arr=[];
+        var flag=true;
+        var found23=false;
+        flag=true;
+        i=0;
+        while(flag==true && i<46)
+        {
+        start=dt.getHours();
+       // console.log("start is "+start);
+        if(start==0 && found23==true)
+        flag=false;
+         if(start==23 && found23==false)
+         found23=true
+        min=dt.getMinutes();
+        min=(min<10)?'0'+min:min;
+        hr=dt.getHours();
+        //print(hr);
+        //print(min)
+        suffix=(hr>11)?'PM':'AM';
+        hr2=(hr>12)?(hr-12):hr;
+        hr2=(hr2<10)?'0'+hr2:hr2;
+        hr=(hr<10)?'0'+hr:hr;
+        if(flag==true) 
+        {
+        farr.push(hr2+':'+min+' '+suffix);
+        
+        arr.push(hr+':'+min);
+        }
+        
+        //console.log(dt.getHours()+' : '+dt.getMinutes());
+        dt.setSeconds(options.gap);
+        i=i+1;
+        }
+        this.timearr=arr;
+        this.ftimearr=farr;
+        
+        
+        
+        
+        
+        
+        },
+        parr:[],
+        _assignprice:function(slotarrstring,price)
+        {
+     
+        var sarr= slotarrstring.toString().split(',');
+              for(ik=0;ik<sarr.length;ik++)
+              {
+              this.parr[sarr[ik]]=price;
+
+
+              }
+
+        },
+        _inner:function(iter,arr)
+        {sparr=iter;
+        tarr=[];
+        this.parr=[];
+        for(i=0;i<sparr.length;i++)
+        {
+            node=sparr[i];
+            narr=node.split('#');
+            
+            //console.log(narr);
+           price=narr[1];
+           tslots=narr[0].split("-");
+           param1=tslots[0];
+           param2=tslots[1];
+            a=arr.indexOf(param1);
+        a2=arr.indexOf(param2);
+        merge=arr.slice(a,a2);
+        tarr=tarr.concat(merge);
+        console.log("merge is "+merge);
+        ms=merge.toString();
+      
+        this._assignprice(merge,price);
+        //this.parr[merge.toString]=this.parr.concat(price);
+        }
+        
+        console.log("tarr is ");
+       console.log(tarr);
+       console.log("parr is ");
+       console.log(this.parr);
+        return tarr;
+        },
+        _addmin(date,minutes)
+        {
+         return new Date( date.getTime() + minutes*60000);
+
+        },
+        _drawinnerday:function(date)
+        {
+
+
+        working_hours=this.dtarr[date];
+        price_arr=this.pricearr[date];
+       // console.log("innerday" + date);
+        dtflag=0;
+        let today = new Date().toISOString().slice(0, 10);
+        var currentdate = new Date();
+        currentdate=this._addmin(currentdate,30);
+        // current hour and minute
+        chr=currentdate.getHours();
+        cmin=currentdate.getMinutes();
+        //console.log("modified time");
+        //console.log(chr);
+        //console.log(cmin);
+         if(today==date)
+         dtflag=1
+        busy_hours=this.bsarr[date]?this.bsarr[date]:[];
+        off_hours=this.off[date]?this.off[date]:[];
+        sp_off=this.spoff[date]?this.spoff[date]:[];
+        node='';
+         ht='<div class="schdata">';
+        for(i=0;i<this.timearr.length;i++)  
+        {
+        
+        slot=this.timearr[i];
+         if(busy_hours.indexOf(slot)>-1){
+         ht=ht+'<div class="cell2 busy">Not Available</div>';
+         continue;
+         
+         }
+         if(sp_off.indexOf(slot)>-1){
+         ht=ht+'<div class="cell2 off"></div>';
+         continue;
+         
+         }
+        if(off_hours.indexOf(slot)>-1){
+         ht=ht+'<div class="cell2 off"></div>';
+         continue;
+         
+         }
+         if(dtflag)
+         {
+
+//console.log(slot);
+shr=slot.substring(0,2);
+smin=slot.substring(3,5);
+//console.log(shr);
+//console.log(smin);
+    if(shr<chr)
+    {
+      ht=ht+'<div class="cell2 off"></div>';
+      continue;
+
+      
+    }
+    if(shr==chr && smin<cmin)
+    {
+      ht=ht+'<div class="cell2 off"></div>';
+      continue;
+
+      
+    }
+
+         }
+         if(working_hours.indexOf(slot)>-1){
+          //console.log('slot is '+slot);
+           var ind=working_hours.indexOf(slot);
+           price=this.formatPrice(price_arr[slot]);
+         ht=ht+'<div class="cell2 working"><button  onclick="book_now(\''+date+"','"+slot +'\')" type="button" class="btn-danger"><span class="fa fa-calendar"></button>'+price+'</div>';
+         continue;
+         
+         }
+         else{
+         
+         
+        ht=ht+'<div class="cell2 notopen"></div>'; 
+         }
+        }
+        ht=ht+'</div>';
+         $('.celldata').append(ht);
+        },
+        drawSchedule:function()
+        {
+          $('.celldata').html('');
+         const day_names=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+         
+        for(obkey in this.dtarr)
+            {
+          
+           //console.log(obkey);
+           tempd=new Date(obkey);
+           weekday=day_names[tempd.getDay()];
+           var node='<div class="cell">'+weekday+ '  '+obkey+'</div>';
+               $('.cell-header').append(node);
+              this._drawinnerday(obkey);
+        
+          }
+        },
+        book_now:function(date,slot)
+        {
+              $.ajax({
+
+                url:"{% url 'service:book_now' id%}",
+                method:"post",
+                data:{date:date,csrfmiddlewaretoken: '{{csrf_token}}',slot:slot,service:{{id}}},
+                dataType:'json',
+                complete:function()
+                {
+
+
+                },
+                success:function(json)
+                {
+
+
+toastsuccess();
+                }
+
+
+              });
+
+        },
+        daydata:function(options)
+        {//it contains time start time end and price like 10:00 ,12:00 and price 12
+        // sp equals to sp data like 10:00-23:00
+        var sp=options.sp?options.sp:false;
+        var busy=options.busy?options.busy:false;
+        var _off=options.off?options.off:false;
+        var _spoff=options.spoff?options.spoff:false;
+        offcheck=true;
+        spoffcheck=true;
+
+        console.log("in daydata");
+        console.log(options);
+        if(options.timings=="00:00-00:00")
+        {
+       offcheck=false;
+          _off='00:00-23.59'
+          this.off[""+options.date+""]=this.timearr;
+
+        }
+        if(_spoff=="00:00-00:00")
+        {
+            //special off
+          this.spoff[""+options.date+""]=this.timearr;
+          spoffcheck=false;
+
+        }
+
+        //console.log(_offh)
+         if(_off && offcheck)
+           {
+          oarr=_off.split(",");
+          _offarr=this._inner(oarr, this.timearr);
+          //console.log("offarr")
+          //console.log(_offarr);
+           this.off[""+options.date+""]=_offarr;
+           }
+           if(_spoff && spoffcheck)
+           {
+           
+          sparr=_spoff.split(",");
+          console.log(sparr);
+          _spoffarr=this._inner(sparr, this.timearr);
+           this.spoff[""+options.date+""]=_spoffarr;
+           }
+           //console.log(this.spoff);
+           //console.log(this.off);
+        tarr=[];
+        if(sp){
+          //console.log("yes special timings are there "+sp);
+        sparr=sp.split(",");
+        }
+        else
+        sparr=options.timings.split(",");
+        
+        tarr=this._inner(sparr, this.timearr);
+        
+               this.dtarr[""+options.date+""]=tarr;
+               this.pricearr[""+options.date+""]=this.parr;
+               //get busy data
+             console.log("busy down");
+             console.log(busy);
+            if(busy!='')
+        {
+        
+        barr=busy.split(",");
+        busyarr=this._inner(barr, this.timearr);
+        this.bsarr[""+options.date+""]=busyarr;
+        console.log(this.bsarr);
+        
+        }		
+        
+        },
+        drawTimeline:function(options){
+        
+        this.getTimeline(options);
+        target=options.target;
+        html='';
+        for(i=0;i<this.ftimearr.length;i++)
+            {
+          
+          html=html +'<div class="tcell">'+this.ftimearr[i]+'</div>';
+          
+          }
+        $('#'+target).html(html);
+        
+        
+        },
+        }
+     var ddates='{{ddates}}';
+     
+        $(document).ready(function(){
+          //var ts=getTimeline({start:0,smin:0,end:23,emin:30,  gap:1800  });
+          //drawTimeline({timearr:ts,target:'timeline'});
+          //appoint({start:9,smin:0,end:20,emin:0,date:'2021-10-10'});
+          shaap.currency={"locale":"{{locjs}}","currency_code":"{{currency_code}}"};
+          shaap.drawTimeline({target:'timeline',start:7,smin:0,gap:{{slot}}});
+          shaap.loadDates('{{dates}}')
+         
+          });
+    function book_now(date,slot)
+    {
+
+shaap.book_now(date,slot)
+
+    }
+    </script>
+  
+    {%endblock%}

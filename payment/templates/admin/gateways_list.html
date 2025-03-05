@@ -1,0 +1,22 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+  <form action="" method="post">
+    {% csrf_token %}
+   {% if gateways|length > 0 %}
+    <table>
+     <tr>
+       <td>Name</td>
+        <td>Action</td>
+     </tr>
+       {% for node in gateways%}
+        <tr>
+<td>{{node}}</td>
+        </tr>
+        {% endfor%}
+    </table>
+   {% else %}
+  No payment gateways found
+   {% endif %}
+  </form>
+{% endblock %}

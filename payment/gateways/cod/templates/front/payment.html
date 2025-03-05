@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+    <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet"  >
+    <script src='/static/jquery/jquery-3.3.1.min.js'></script>
+    <link href="/static/bootstrap/css/style.css" rel="stylesheet"  crossorigin="anonymous">
+    <title>{% block title %} {% endblock title%}</title>
+  </head>
+  <body>
+<form method="post" id='formp'>
+<input type="hidden" name='ott' value='{{ott}}' />
+<input type='hidden' name='gateway' value='cod'/>
+<input type='button' id='button-confirm' class='btn btn-primary' name='submit' value='Submit'>
+
+</form>
+<script type="text/javascript">
+
+  $('#button-confirm').on('click', function() {
+    $.ajax({
+      url: "{{action}}",
+      dataType: 'json',
+      method:'post',
+      data:$('#formp').serialize(),
+      beforeSend: function() {
+       // $('#button-confirm').button('loading');
+      },
+      complete: function() {
+      //  $('#button-confirm').button('reset');
+      },
+      success: function(json) {
+        if (json['redirect']) {
+          location = json['redirect'];	
+        }
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+</script>
+  
+</body>
+</html>

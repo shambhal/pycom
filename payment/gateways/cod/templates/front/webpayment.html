@@ -1,0 +1,40 @@
+<div class='card'>
+
+  <div class='card-body'>
+    <div class='card-title'><h3>Cash On Appointment Day<h3></div>
+<form method="post" id='formp'>
+<input type="hidden" name='ott' value='{{ott}}' />
+<input type='hidden' name='gateway' value='cod'/>
+<input type='button' id='button-confirm' class='btn btn-primary' name='submit' value='Submit'>
+
+</form>
+
+</div>
+</div>
+<script type="text/javascript">
+
+  $('#button-confirm').on('click', function() {
+    $.ajax({
+      url: "{{action}}",
+      dataType: 'json',
+      method:'post',
+      data:$('#formp').serialize(),
+      beforeSend: function() {
+       // $('#button-confirm').button('loading');
+      },
+      complete: function() {
+      //  $('#button-confirm').button('reset');
+      },
+      success: function(json) {
+        if (json['redirect']) {
+          location = json['redirect'];	
+        }
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+</script>
+  

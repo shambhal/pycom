@@ -1,0 +1,173 @@
+{% extends "catalog/base.html" %}
+{% load i18n %}
+{%block title%} Checkout Options {% endblock%}
+{%block extrahead%} 
+<script src="https://accounts.google.com/gsi/client" onload="console.log('TODO: add onload function')">
+</script>
+
+
+{%endblock%}
+{% block body %}
+
+<div class='card'>
+
+    <div class='card-title'>
+        
+        <h2 class="pad10">{% translate "checkout_checkout_options" %}</h2></div>
+<div class='card-body'>
+
+        <div class='row'>
+
+          <div class='col-md-6 col-sm-12'>
+              
+            <p><a href='{% url "checkout:checkout" %}?type=guest'>Go without creating account</a>
+            
+            </p>  <a href='{% url "customer:customer-create"%}'>Register Account</a>
+            <p><button class='btn btn-primary' onclick='oauthSignIn()'><i class="fa fa-google"></i> Use google to create account</button></p>
+
+          </div>
+
+
+          <div class='col-md-6 col-sm-12'>
+
+             <form method="post" >
+                {% csrf_token %}
+                {% include 'catalog/form_field.html'%}
+                <div class="submit-row">
+                    <button class='btn btn-primary' type="submit" >{% translate "Login" %}</button>
+
+           
+
+                  </div>
+
+             </form>   
+
+
+
+          </div>
+
+
+        </div>   
+
+
+
+</div>
+
+</div>
+
+<script>
+  function glogin2()
+  {
+data='497cuHaT9Cz_KtHhJv3a9Nn3-93S-O4SVaFe-ScvLbnO18k5cZMj7EWgA9JqLvxmsYv2vlWwFxka6F8Sd7vINxrE3tn67eWuQ4Giwm4iFflv80ZFkL1lRD8_A';
+token='eyJhbGciOiJSUzI1NiIsImtpZCI6IjBlMzQ1ZmQ3ZTRhOTcyNzFkZmZhOTkxZjVhODkzY2QxNmI4ZTA4MjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI1ODg3MTk0NzgxMjItNDZqcHVoMGczc2RlZmxvaGU4MmJoMDEycnZzZnQ5ZzAuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1ODg3MTk0NzgxMjItNDZqcHVoMGczc2RlZmxvaGU4MmJoMDEycnZzZnQ5ZzAuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTc4Mzk4ODUwNTU2OTA1MDU5MzQiLCJlbWFpbCI6InNoYW1iaGFsbmV0d29ya3NAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTcyMTQ2NjYwNCwibmFtZSI6IlNoYW1iaGFsIE5ldHdvcmtzIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0xVQVJHNzBJNUhGSXoxYjA2c29ta0x6WTlCMHBHd05JTGRiM1Z6aDczb0pEWEtndz1zOTYtYyIsImdpdmVuX25hbWUiOiJTaGFtYmhhbCIsImZhbWlseV9uYW1lIjoiTmV0d29ya3MiLCJpYXQiOjE3MjE0NjY5MDQsImV4cCI6MTcyMTQ3MDUwNCwianRpIjoiNTIzMWE5MzZiYzM0ZDAwNDg0MzgzMmZiZTUzZDhiNzQ5N2ZlNTk3MiJ9.MPxlPZYFIxaB6cV9dxk_kA9DLGKT4wkstrMngJ2cobh4FYLNdtWL720A8DehDzVMQG16_KTIpZQCKhlcYqz7vBP589dBq8rIane22NSOU31iwp2zuCC9YT0hLBjLSzta0aPpAhh56nQljLdERie4rueAIspiVMyKLLDk8lkXbfGgKMdvFD4-KzibWjSBj8IomlOsHE_btkko4PEi6Jov9JxU70DnO6823b5r2xMGPNVgq5rStR83a9lJ0l_NGD2txDaa4yFn6PDdQPtiH6ETNypvB1eUEM9CFYKXyCm0yeC3rGVUK_YrvsTISpZTxVgKxpDnidwfOwXrIjYdmGDc7A';
+
+data2=JSON.parse(atob(token.split('.')[1]));
+console.log(data2)
+$.ajax({
+
+  url: '{{login_uri}}',
+  method:"Post",
+  type:'POST',
+  headers: {'X-CSRFToken': '{{csrf_token}}'},
+  data:{'credential':data},
+  dataType: 'html',
+  success:function(json)
+  {
+
+    console.log(json);
+  },
+  error: function(xhr, ajaxOptions, thrownError) {
+    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+}
+
+  });
+}
+ 
+  function glogin(data)
+  {
+  
+  console.log(data);
+  token=data;
+ data=JSON.parse(atob(token.split('.')[1]));
+console.log(data)
+  $.ajax({
+
+    url: '{{login_uri}}',
+    headers: {'X-CSRFToken': '{{csrf_token}}'},
+    method:"Post",
+    type:'POST',
+    data:data,
+    dataType: 'html',
+    success:function(json)
+    {
+
+      console.log(json);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+  }
+});
+}
+
+
+
+
+
+
+
+
+  
+
+
+function oauthSignIn() {
+  // Google's OAuth 2.0 endpoint for requesting an access token
+  var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+  // Create <form> element to submit parameters to OAuth 2.0 endpoint.
+  var form = document.createElement('form');
+  form.setAttribute('method', 'GET'); // Send as a GET request.
+  form.setAttribute('action', oauth2Endpoint);
+
+  // Parameters to pass to OAuth 2.0 endpoint.
+  var params = {'client_id': '{{gci}}',
+                'redirect_uri': 'https://appoint.shambhalnetworks.in{{login_uri}}',
+                'response_type': 'token',
+                'scope': 'https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/calendar.readonly',
+                'include_granted_scopes': 'true',
+                'state': 'pass-through value'};
+
+  // Add form parameters as hidden input values.
+  for (var p in params) {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'hidden');
+    input.setAttribute('name', p);
+    input.setAttribute('value', params[p]);
+    form.appendChild(input);
+  }
+
+  // Add form to page and submit it to open the OAuth 2.0 endpoint.
+  document.body.appendChild(form);
+  form.submit();
+}
+
+  function promptt()
+  {
+   // glogin2();
+ google.accounts.id.prompt();
+  }
+  window.onload = function () {
+    google.accounts.id.initialize({
+      client_id: '{{gci}}',
+      auto_select:false,
+       context:"signin",
+    ux_mode:"popup",
+    use_fedcm_for_prompt:true,
+      callback: glogin,
+
+    });
+    
+  };
+</script>  
+
+
+{% endblock%}

@@ -1,0 +1,196 @@
+{% load i18n static %}<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/admin/fontawesome/css/all.min.css" />
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+    <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet"  >
+    <script src='/static/jquery/jquery-3.3.1.min.js'></script>
+    <link href="/static/bootstrap/css/style.css" rel="stylesheet"  crossorigin="anonymous">
+    <title>{% block title %} {% endblock title%}</title>
+    {% block extrahead %}{% endblock %}
+  </head>
+  <body>
+
+ <script>
+let cart_urls={};
+cart_urls.del='{% url "cart:remove"%}';
+
+
+ </script>
+
+
+<script src='/static/js/common.js'></script>
+
+
+
+
+
+    <header id="header" class="fixed-topf d-flex align-items-center">
+      <div class="container d-flex align-items-center justify-content-between">
+  
+        <h1 class="logo"><a href="{% url "home"%}">Schedule</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+  
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+            
+            <li><a class="nav-link scrollto" href="{% url 'service:list' %}">Services</a></li>
+    
+            <li><a class="nav-link scrollto" href="{%url 'cart:cart'%}">Cart</a></li>
+           
+            
+            <li class="dropdown"><a href="javascript:void(0)"><span>My Account</span> <i class="bi bi-chevron-down"></i></a>
+              {%if request.user.is_authenticated %}
+              
+                  <ul>
+                    <li><a href="{% url 'customer:profile'%}">Details</a></li>
+                 
+                    <li><a href="{% url 'customer:logout' %}">Log Out</a></li>
+                  </ul>
+               
+              {% else%}
+              <ul>
+                <li><a href="{% url 'customer:customer-create'%}">Register</a></li>
+                <li><a href="{% url 'customer:customer-login' %}">Log In</a></li>
+              
+               
+              </ul>
+
+
+              {% endif %}
+            </li>
+            <!--
+            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            <li><a class="getstarted scrollto" id="schedule-detail" href="#about"></a></li>-->
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+  
+      </div>
+    </header><!-- End Header -->
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="/static/js/bootstrap.bundle.min.js" ></script>
+    <main id="main">
+      <section class="inner-page">
+    <div class='container'>
+      {% if messages %}
+     <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+    {% block body %} 
+    {% endblock body %}
+    </div>
+  </section>
+  </main>
+  <footer id='footer'>
+<section class="footer-top">
+
+<div class='container'>
+  <div class='row'>
+   <div class='col-md-6'>
+         <div class='footer-info'>
+           <h3>Demo collection</h3>
+            <p>One of the finest companies in town , we have hundred plus reviews</p>
+             <p class='mt-4'><a href='{% url "contact:terms"%}'>Terms and conditions</a>
+         </div>
+
+   </div>
+
+   <div class='col-md-6'>
+     
+    <div class="row">
+     <div class="col-md-6  border-end">
+      <h3 >Quick Links</h3>
+        <div id="ilinks"></div>
+
+
+     </div>
+     <div class='col-md-6'>
+    <div class='social-links'>
+      <a href='{% url "contact:contact"%}'><i class='fa-2x  fa fa-envelope'></i></a>&nbsp;
+        <a href='#'><i class='fa-2x  fa fa-youtube'></i></a>&nbsp;
+      <a href='#'><i class='fa-2x  fa fa-facebook'></i></a>
+    </div>
+    </div>
+
+  </div>
+
+   </div>
+
+  </div>
+
+
+</div>
+
+</section>
+
+
+  </footer>
+  <script>
+var headf={
+  site_url:'',
+  liclass:'fs-6  text-white',
+  parse:function(json)
+  {
+ var   self=this;
+   var arg=json;
+   htm='<ul class="unstyled">';
+   for(i=0;i<arg.length;i++)
+       {
+
+   
+node='<li><a class="'+self.liclass+'" href="'+self.site_url+arg[i]['seo_url']+'">'+arg[i]['title']+'</a></li>';
+htm +=node;
+       }
+   htm +='</ul>';
+$('#ilinks').html(htm);
+  },
+init:function()
+  {
+  var  self=this;
+    $.ajax({
+      url: '{% url 'headless:infolinks'%}',
+      
+      
+     
+      success: function(json) {
+        self.site_url=json['site_url'];
+      
+      self.parse(json['links']);
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+          //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+  });
+   
+
+
+  }
+
+
+};
+$(document).ready(function(){
+  
+ headf.init();
+
+
+});
+
+
+
+  </script>
+  </body>
+</html>

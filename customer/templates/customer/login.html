@@ -1,0 +1,59 @@
+
+{% extends "catalog/base.html" %}
+{% block title%}Login {% endblock%}
+{% load i18n %}
+{% load  static %}
+
+{% block body %}
+{% if form.errors and not form.non_field_errors %}
+<div class="alert alert-danger">
+{% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
+</div>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<div class="alert alert-danger">
+    {{ error }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div id="content-main" class='mt-4'>
+
+{% if user.is_authenticated %}
+<div class="alert alert-warning">
+{% blocktranslate trimmed %}
+    You are authenticated as {{ username }}, but are not authorized to
+    access this page. Would you like to login to a different account?
+{% endblocktranslate %}
+</div>
+{% endif %}
+<div class="border rounded p-3 d-flex flex-column h-100">
+<form action="{{ app_path }}" method="post" id="login-form">
+  {% csrf_token %}
+ 
+  {% include 'catalog/form_field.html'%}
+ <div>
+      <div class="text-end">
+        <button class='btn btn-primary' type="submit" >{% translate "Login" %}</button>
+      </div>
+
+          <div class='text-start'>
+      <p>
+      <a href='{% url 'customer:password-reset' %}'>{% translate "Forgot Password"%} </a>
+      </p>
+      <p>
+
+      <a href='{% url 'customer:customer-create'%}'>{% translate "Sign Up"%} </a></p>
+      </div>
+ 
+
+
+</div>
+
+</form>
+</div>
+
+</div>
+{% endblock %}

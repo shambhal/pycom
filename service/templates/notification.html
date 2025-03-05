@@ -1,0 +1,35 @@
+<div class='toast-container position-absolute top-50 start-50 translate-middle'>
+
+<div class='toast'role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+
+<div class="toast-header bg-primary text-white"><strong class="me-auto">Appointement Scheduled </strong><button type="button" class="btn-close text-white" data-bs-dismiss="toast" aria-label="Close"></button></div>
+
+<div class='toast-body'>
+
+
+
+</div>
+
+</div>
+</div>
+<!--<button id='btn-pak' onclick="toastsuccess()"></button>-->
+<script>
+    
+   function toastsuccess()
+   {
+    //var cart_url= 
+var msg='<div class="row mt px-2 ">Date with slot has been added into your wishlist.<br/>It will be actually booked checking the real-time availability.</div><div class="row mt-5"><div class="col-md-6"><a href="{%url "cart:cart"%}" class="btn btn-primary">View Wishlist</a></div><div class="col-md-6"><a href="{%url "cart:book-cart" %}" class="btn btn-primary">Book Now</a></div>';
+var msg2='<div class="row mt-5 pl-5">Date with slot has been added into your wishlist.<p>Your details would be required to actually book the </p></div><div class="row mt-5"><div class="col-md-6"><a href="#">View Wishlist</a></div><div class="col-md-6"><a href="#">Book Now</a></div>';
+
+$('.toast-body').html(msg);
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    var toastList = toastElList.map(function(toastEl) {
+      return new bootstrap.Toast(toastEl)
+    })
+    toastList.forEach(toast => toast.show())
+
+
+   }
+
+
+</script>

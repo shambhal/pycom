@@ -1,0 +1,9 @@
+{% extends base_site.html%}
+{% for field in form%}
+
+<div class="form-group">
+
+<label for ="field.id_for_label"  class="col-sm-2">{{field.html_name}}</label>
+{{field}}
+</div>
+{% endfor%}

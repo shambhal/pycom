@@ -1,0 +1,60 @@
+{% extends "catalog/base.html" %}
+
+{% block title%} Service {% endblock%}
+{%block extrahead%} 
+<script src="https://accounts.google.com/gsi/client" onload="console.log('TODO: add onload function')">
+</script>
+
+
+{%endblock%}
+{% block body%}
+<div ids="g_id_onload"
+        data-client_id="{{gci}}"
+        data-login_uri="https://appoint.shambhalnetworks.in/login"
+        data-auto_select="false"
+        data-nonce="biaqbme70g23"
+        data-auto_prompt="false">
+    </div>
+    <div classs="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left">
+    </div>
+    <div id="g_id_onload"
+     data-client_id="588719478122-46jpuh0g3sdeflohe82bh012rvsft9g0.apps.googleusercontent.com"
+     data-context="signin"
+     data-ux_mode="popup"
+     data-login_uri="https://appoint.shambhalnetworks.in/gsignin"
+     data-nonce=""
+
+
+
+
+
+     
+     data-auto_select="true"
+     data-itp_support="true">
+</div>
+
+<div class="g_id_signin"
+     data-type="standard"
+     data-shape="rectangular"
+     data-theme="outline"
+     data-text="signin_with"
+     data-size="large"
+     data-logo_alignment="left">
+</div>
+<script>
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      }
+
+</script>    
+{% endblock%}

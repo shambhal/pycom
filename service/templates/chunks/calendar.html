@@ -1,0 +1,32 @@
+{% load i18n static %}
+<div class='row align-items-end'>
+<div class='col-8'></div>
+    <div class='col-3'>
+<div class="input-group">
+    <input type="text" name="filter_date_from" value="" placeholder="{% translate "date" %}" id="input-date-from" class="form-control date" >
+    <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+	<div class='text-end '><button class='btn btn-primary' id='btn-go'>{% translate "btn_submit"%}</div>  
+</div><!--input group-->
+</div>
+
+</div>
+
+<script>
+var oc_datetimepicker = function () {
+	$(this).daterangepicker({
+		singleDatePicker: true,
+		autoApply: true,
+		maxDate:'{{max_date}}',
+		minDate:'{{min_date}}',
+		autoUpdateInput: false,
+		locale: {
+			format: 'YYYY-MM-DD',
+			maxdate:'{{max_date}}'
+		}
+	}, function (start, end) {
+		$(this.element).val(start.format('YYYY-MM-DD'));
+	});
+}
+$(document).on('focus', '.date', oc_datetimepicker);
+
+</script>

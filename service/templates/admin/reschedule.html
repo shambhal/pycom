@@ -1,0 +1,55 @@
+{% extends "admin/base.html" %}
+{%load static%}
+
+{% block content %}
+{% block nav-sidebar %}{% include 'admin/app_list.html' with app_list=available_apps show_changelinks=False %}{% endblock %}
+
+
+ 
+    {% if saved %}
+     Saved
+    {% endif %}
+    {% if errors %}
+     {{errors  }}
+    {% endif %}
+    {{service_name}}
+   <form method="POST"  >
+    {% csrf_token %}
+  {% for field in form%}
+  
+<div class="form-group row">
+
+<label for ="{{field.id_for_label}}"  class="col-sm-2">{{field.html_name}}</label>
+<div class="col-sm-8">
+{% if field.name == "sdate" %}
+<div class="input-group date">{{field}}</div>
+
+{% else%}
+{{field}}
+{% endif %}
+</div>
+</div>
+{% endfor%}
+    
+
+
+
+  <script type="text/javascript">
+         $(function () {
+             $('.datepicker').datetimepicker(
+                {
+'format': 'YYYY-MM-DD',
+
+                }
+
+
+
+             );
+         });
+      </script>
+
+
+  
+  <button type="submit"  class='btn btn-submit btn-primary'>Save</button>
+  </form>
+{% endblock %}

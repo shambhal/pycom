@@ -1,0 +1,18 @@
+
+{% extends base %}
+
+
+
+{% block body %}
+Fill your details for the appointment
+<form action="/contact/" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="mb-3">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+    {% endfor %}
+    <input type="submit" class='btn btn-primary' value="Submit">
+ </form>
+{% endblock %}

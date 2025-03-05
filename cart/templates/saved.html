@@ -1,0 +1,15 @@
+{% extends "catalog/base.html" %}
+
+{% block title%}Cart {% endblock%}
+{% block body%}
+
+        <div class='rounded ps-4'>
+           Actions have been taken on your wish list
+                <div class='row'>
+                      <div class='col-md-6'><a href='{% url 'customer:mybookings' %}' class='btn btn-primary'>Go to Bookings </a></div>
+                      <div class='col-md-6'></div>
+                </div>
+
+
+        </div>
+{% endblock%}

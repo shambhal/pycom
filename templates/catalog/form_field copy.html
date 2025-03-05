@@ -1,0 +1,13 @@
+{# Include the hidden fields #}
+{% load cust_css %}
+{% for hidden in form.hidden_fields %}
+{{ hidden }}
+{% endfor %}
+{# Include the visible fields #}
+{% for field in form.visible_fields %}
+    <div class="row mb-2">
+       
+       <label class="col-sm-2 form-label"> {{ field.label_tag }}</label>
+       <div class="col-sm-9"> {{ field|addClass:'form-control' }} {{ field.errors }}</div>
+    </div>
+{% endfor %}

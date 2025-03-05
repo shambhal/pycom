@@ -1,0 +1,44 @@
+{% extends "catalog/base.html" %}
+
+{% block title%} Booked {% endblock%}
+{% block body%}
+<div class='container'>
+    <table class="table-striped table">
+        <tr>
+<td>Date</td>
+<td>Service</td>
+<td>Slot</td>
+        </tr>
+{% for contact in page_obj %}
+    {# Each "contact" is a Contact model object. #}
+ <tr>
+     <td>{{contact.dated}}</td>
+     <td>{{contact.service.name}}</td>
+     <td>{{contact.slot}}</td>
+     
+ </tr>
+{% endfor %}
+</table>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
+</div>
+
+{% endblock body%}

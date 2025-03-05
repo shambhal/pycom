@@ -1,0 +1,16 @@
+{% extends "catalog/base.html" %}
+{% block title%}Edit Profile {% endblock%}
+{% load i18n %}
+{% load  static %}
+{% block body %}
+Welcome {{username}}
+<form method="post">
+    {% csrf_token %}
+ 
+    {% include 'catalog/form_field.html'%}
+
+<div class="row">
+    <button class='btn btn-primary'>Submit</button>
+    <div>
+</form>
+{% endblock%}

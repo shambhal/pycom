@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <br>
+
+        <h2>Thank you for your booking an appointment with us {{ order.name }}</h2>
+        <h3>Your Order ID: {{ order.id }}</h3>
+
+
+        <h3>Appointment Details:</h3>
+
+        {{ order.desc}} </br>
+        {{ order.dated }} <br/>
+        {{ order.slot }} <br/>
+        {{ order.status }}
+
+        <h3>
+            Contact Details:
+        </h3>
+        Email: {{ order.email }} <br/>
+        Phone: {{ order.phone }}
+
+        
+    </body>
+</html>

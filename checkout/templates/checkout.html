@@ -1,0 +1,188 @@
+{% extends "catalog/base.html" %}
+{%block title%} Checkout {% endblock%}
+{% block body %}
+<div class='section-title'><h2>Checkout</h2></div>
+ <div class='row'>
+     <div class='col-md-6 col-sm-12'>
+          
+          <div id="cartview"></div>
+     </div>
+     <div class='col-md-6 col-sm-12'>
+      
+        <div id="apview"></div>
+        <div id="pmsview" class='mt-2'></div>
+
+   </div>
+
+   <div class='col-md-12'>
+   
+
+
+</div>
+<div class='col-md-12' id="paymentform"></div>
+
+
+ </div>   
+
+<script>
+var scriptcheckout={
+
+
+    init:function()
+    {
+
+this.loadAppointee();
+
+this.loadCart();
+this.loadPayments();
+
+    },
+    loadPayments:function()
+    {
+
+var self=this;
+        $.ajax({
+            url: '{% url 'checkout:pms'%}',
+            dataType: 'html',
+            success: function(html) {
+             $('#pmsview').html(html)
+self.triggerPayment();
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+
+    },
+    _postpayment :function()
+    {
+        $.ajax({
+            url: 'index.php?route=checkout/payment_method/save',
+            type: 'post',
+            data: $('#collapse-payment-method input[type=\'radio\']:checked, #collapse-payment-method input[type=\'checkbox\']:checked, #collapse-payment-method textarea'),
+            dataType: 'json',
+            beforeSend: function() {
+                 $('#button-payment-method').button('loading');
+            },
+            success: function(json) {
+                $('.alert-dismissible, .text-danger').remove();
+    
+                if (json['redirect']) {
+                    location = json['redirect'];
+                } else if (json['error']) {
+                    $('#button-payment-method').button('reset');
+                    
+                    if (json['error']['warning']) {
+                        $('#collapse-payment-method .panel-body').prepend('<div class="alert alert-danger alert-dismissible">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    }
+                } else {
+                    $.ajax({
+                        url: 'index.php?route=checkout/confirm',
+                        dataType: 'html',
+                        complete: function() {
+                            $('#button-payment-method').button('reset');
+                        },
+                        success: function(html) {
+                            $('#collapse-checkout-confirm .panel-body').html(html);
+    
+                            $('#collapse-checkout-confirm').parent().find('.panel-heading .panel-title').html('<a href="#collapse-checkout-confirm" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle">{{ text_checkout_confirm }} <i class="fa fa-caret-down"></i></a>');
+    
+                            $('a[href=\'#collapse-checkout-confirm\']').trigger('click');
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+
+    },
+    triggerPayment:function()
+    {
+        $('input[name="payment"]').on('click',function(){
+
+           // alert("hi");
+
+          //$('#btn-confirm').attr('disabled',true);
+            
+            });
+$('#btn-confirm').on('click',this.showPaymentForm);
+
+    },
+    showPaymentForm:function()
+    {
+        $.ajax({
+            url: '{% url 'checkout:wpayment'%}',
+            headers: {'X-CSRFToken': '{{csrf_token}}'},
+            type:'post',
+            data:$('#pmsview input[type=\'radio\']:checked, #pmsview input[type=\'textarea\'],#pmsview textarea, #pmsview input[type=\'checkbox\']:checked'),
+            success: function(html) {
+             //$('#apview').html(html)
+             if(html['error'] !=undefined )
+             {
+
+                alert(html['error']);
+                return
+             }
+             $('#paymentform').html(html);
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+
+
+
+    },
+    loadAppointee:function()
+    {
+
+ 
+        $.ajax({
+            url: '{% url 'checkout:apdetails'%}',
+            dataType: 'html',
+            success: function(html) {
+             $('#apview').html(html)
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+
+
+    },
+
+
+    loadCart:function()
+    {
+
+ 
+        $.ajax({
+            url: '{% url 'checkout:cartdetails'%}',
+            dataType: 'html',
+            success: function(html) {
+             $('#cartview').html(html)
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+
+
+    }
+
+
+    
+}
+$(document).ready(function(){
+
+    scriptcheckout.init();
+
+});
+
+
+</script>{% endblock %}

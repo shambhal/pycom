@@ -1,0 +1,13 @@
+{% extends "catalog/base.html" %}
+
+{% block body %}
+Fill your details for the appointment
+  <form  method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    
+    </table>
+    <input type="submit" value="Submit" class='btn btn-primary'>
+  </form>
+{% endblock %}

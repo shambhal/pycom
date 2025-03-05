@@ -1,0 +1,49 @@
+{% load i18n %}
+
+{% if app_list %}
+<nav id="column-left">
+  <ul id="menu">
+ 
+  {% for app in app_list %}
+     {% with i=forloop.counter%}
+       {% for model in app.models %}
+            {#  model.add_url  1==1 % #}
+            {% if 1 %}
+              <li  id="menu-{{model.name}}">
+                 <a href="#collapse-{{model.name}}" data-bs-toggle="collapse" class="parent collapsed">
+               
+                   {{ model.name }}
+                  
+                 </a>
+                 <ul id="collapse-{{model.name}}" class="collapse">
+                         {% if model.add_url %}
+                         <li >
+                           <a href="{{ model.add_url }}" >{% translate 'Add' %}</a>
+
+                         </li>
+                         {% endif %}
+                         {% if model.admin_url %}
+                         <li><a href="{{ model.admin_url }}"{% if model.admin_url in request.path|urlencode %} aria-current="page"{% endif %}>{{ model.name }}</a></li>
+                       {% else %}
+                         <li>>{{ model.name }}</li>
+                       {% endif %}
+                          {% if model.admin_url and show_changelinks %}
+              {% if model.view_only %}
+                  <li ><a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %}</a></li>
+              {% else %}
+                <li><a href="{{ model.admin_url }}" class="changelink">{% translate 'Change' %}</a></li>
+              {% endif %}
+            {% elif show_changelinks %}
+             <li></li>
+            {% endif %}
+
+
+                         </ul>
+              </li>
+      {% endif %}<!--hide custom menu-->
+       {% endfor %}
+      {% endwith%}
+       {% endfor%}
+            </ul>
+            </nav>
+    {% endif%}

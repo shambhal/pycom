@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+    <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet"  >
+    <script src='/static/jquery/jquery-3.3.1.min.js'></script>
+    <link href="/static/bootstrap/css/style.css" rel="stylesheet"  crossorigin="anonymous">
+    <title>{% block title %} {% endblock title%}</title>
+  </head>
+  <body>
+
+ <script>
+let cart_urls={};
+cart_urls.del='{% url "cart:remove"%}';
+
+
+ </script>
+
+
+<script src='/static/js/common.js'></script>
+
+
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="/static/js/bootstrap.bundle.min.js" ></script>
+    <main id="main">
+      <section class="inner-page">
+    <div class='container'>
+      {% if messages %}
+     <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+    {% block body %} 
+    {% endblock body %}
+    </div>
+  </section>
+  </main>
+  
+  </body>
+</html>

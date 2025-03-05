@@ -1,0 +1,196 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-21 20:19+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\customer\templates\customer\logged_out.html:10
+msgid "Thanks for spending some quality time with the Web site today."
+msgstr ""
+
+#: .\customer\templates\customer\logged_out.html:12
+msgid "Log in again"
+msgstr ""
+
+#: .\customer\templates\registration\login.html:10
+#: .\customer\templates\registration\password_change_form.html:18
+msgid "Please correct the error below."
+msgstr "Please correct the error below."
+
+#: .\customer\templates\registration\login.html:10
+#: .\customer\templates\registration\password_change_form.html:18
+msgid "Please correct the errors below."
+msgstr "Please correct the errors written below."
+
+#: .\customer\templates\registration\login.html:26
+#, python-format
+msgid ""
+"You are authenticated as %(username)s, but are not authorized to access this "
+"page. Would you like to login to a different account?"
+msgstr ""
+
+#: .\customer\templates\registration\login.html:38
+msgid "Login"
+msgstr "Login"
+msgid "Sign Up"
+msgstr "Sign Up!"
+
+
+
+#: .\customer\templates\registration\password_change_done.html:3
+#: .\customer\templates\registration\password_change_form.html:4
+msgid "Documentation"
+msgstr ""
+
+#: .\customer\templates\registration\password_change_done.html:3
+#: .\customer\templates\registration\password_change_form.html:4
+msgid "Change password"
+msgstr ""
+
+#: .\customer\templates\registration\password_change_done.html:3
+#: .\customer\templates\registration\password_change_form.html:4
+msgid "Log out"
+msgstr ""
+
+#: .\customer\templates\registration\password_change_done.html:6
+#: .\customer\templates\registration\password_change_form.html:7
+#: .\customer\templates\registration\password_reset_complete.html:6
+#: .\customer\templates\registration\password_reset_confirm.html:7
+msgid "Home"
+msgstr ""
+
+#: .\customer\templates\registration\password_change_done.html:7
+#: .\customer\templates\registration\password_change_form.html:8
+msgid "Password change"
+msgstr ""
+
+#: .\customer\templates\registration\password_change_done.html:12
+msgid "Your password was changed."
+msgstr ""
+
+#: .\customer\templates\registration\password_change_form.html:23
+msgid ""
+"Please enter your old password, for security’s sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+
+#: .\customer\templates\registration\password_change_form.html:51
+msgid "Change my password"
+msgstr ""
+
+#: .\customer\templates\registration\password_reset_complete.html:7
+msgid "Password reset"
+msgstr ""
+
+#: .\customer\templates\registration\password_reset_confirm.html:8
+msgid "Password reset confirmation"
+msgstr ""
+
+#: .\customer\templates\registration\password_reset_email.html:2
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+
+#: .\customer\templates\registration\password_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: .\customer\templates\registration\password_reset_email.html:8
+msgid "Your username, in case you’ve forgotten:"
+msgstr ""
+
+#: .\customer\templates\registration\password_reset_email.html:10
+msgid "Thanks for using our site!"
+msgstr ""
+
+#: .\customer\templates\registration\password_reset_email.html:12
+#, python-format
+msgid "The %(site_name)s team"
+msgstr ""
+
+#: .\customer\templates\registration\password_reset_form.html:8
+msgid ""
+"Forgotten your password? Enter your email address below, and we’ll email "
+"instructions for setting a new one."
+msgstr ""
+
+#: .\customer\templates\registration\password_reset_form.html:14
+msgid "Email address:"
+msgstr ""
+
+#: .\customer\templates\registration\password_reset_form.html:17
+msgid "Reset my password"
+msgstr ""
+
+#: .\product\models.py:42
+msgid "Disabled"
+msgstr "Disabled"
+
+#: .\product\models.py:43
+msgid "Enabled"
+msgstr "Enabled"
+
+#admin templates
+msgid "admin_customers"
+msgstr "Customers"
+msgid "menu_book"
+msgstr "Appointments"
+msgid "menu_books"
+msgstr "Appointments"
+msgid "menu_user"
+msgstr "Users"
+msgid "menu_customer"
+msgstr "Customers"
+msgid "menu_order"
+msgstr "Orders"
+msgid "menu_services"
+msgstr "Services"
+msgid "sdate"
+msgstr "Special Day date"
+msgid "menu_sspecial"
+msgstr "Special Day Timings"
+msgid "menu_service"
+msgstr "Services"
+msgid "menu_group"
+msgstr "Groups"
+msgid "menu_information"
+msgstr "Information Pages"
+msgid "menu_tax"
+msgstr "Taxes"
+msgid "menu_catmodule"
+msgstr "App Category Module"
+msgid "menu_payment"
+msgstr "Payment Modules"
+msgid "customer_add"
+msgstr "Add Customer"
+msgid "customer_create_account"
+msgstr "Create Account"
+msgid "btn_create"
+msgstr "Create"
+msgid "btn_yes"
+msgstr "Yes"
+msgid "btn_submit"
+msgstr "Submit"
+msgid "date"
+msgstr "Date"
+msgid "btn-go"
+msgstr "Go"
+
+msgid "checkout_checkout_options"
+msgstr "Checkout Options"

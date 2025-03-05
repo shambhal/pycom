@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+{%load static%}
+{% block extrastyle %}
+
+
+    
+
+    <!-- Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Moment.js -->
+
+    <!-- Tempus Dominus Bootstrap 4 -->
+   
+
+
+
+    
+
+  
+
+{% endblock %}
+{% block content %}
+  
+
+
+ 
+    {% if saved %}
+     Saved
+    {% endif %}
+    {% if errors %}
+     {{errors  }}
+    {% endif %}
+    {{service_name}}
+   <form method="POST"  >
+    {% csrf_token %}
+  {% for field in form%}
+ 
+<div class="form-group row">
+
+<label for ="{{field.id_for_label}}"  class="col-sm-2">{{field.label}}</label>
+<div class="col-sm-8">
+{% if field.name == "sdate" %}
+<div class="input-group ">{{field}}</div>
+
+{% else%}
+{{field}}
+{% endif %}
+</div>
+</div>
+<br/>
+{% endfor%}
+    
+
+
+
+  
+
+  
+    <input type="submit" value="Submit" class='btn btn-submit btn-primary'/>
+  </form>
+{% endblock %}

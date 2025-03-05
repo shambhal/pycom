@@ -1,0 +1,28 @@
+
+<div class="card">
+
+<div class='card-body'>
+
+    <div class='card-title'><h3>Payment Method</h3></div>
+{%for pm in pms%}
+<p>
+<input type="radio" name="payment" value='{{pm.code}}'> {{pm.name}}{{pm.title}}
+</p>
+{% endfor %}
+
+  <div>
+    <p>Comment/Request</p>
+
+   <textarea class="form-control" name='comment'>{{comment}}</textarea>
+
+
+  </div>
+  <div class='mt-4'>
+   <button class='btn btn-primary' id='btn-confirm'>Confirm</button>
+
+  </div>
+
+</div>    
+
+
+</div>    
