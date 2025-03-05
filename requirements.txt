@@ -1,0 +1,8 @@
+django-environ
+django_mysql
+djangorestframework
+djangorestframework-simplejwt
+django-ckeditor
+mysqlclient
+pillow
+django-babel
