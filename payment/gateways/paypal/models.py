@@ -11,7 +11,7 @@ class Paypal(models.Model):
        AUTH ='Auth', _('Authorization')
        SALE = 'Sale', _('Sale')
 
-    email=models.CharField(blank=False,max_length=100)
+    email=models.CharField(blank=False,max_length=150)
     status=models.BooleanField(default=0)
     sandbox=models.BooleanField(default=1)
     transaction=models.CharField(choices=TranStatus.choices ,max_length=4)
