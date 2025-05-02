@@ -9,6 +9,7 @@ from django.contrib.auth import login,authenticate,logout
 #from service.helpers import generateKey
 from time import time  
 from django.urls import reverse
+from pycom.settings import SITE_URL
 from django.middleware.csrf import get_token
 from checkout.signals import create_ott_signal
 import importlib 
@@ -193,8 +194,8 @@ class CheckoutLogin(View):
        context={'csrf_token': get_token(request),
                  'form': AuthenticationForm(),
                  'gci':GCI,
-                 'login_uri':reverse('customer:customer-glogin'),
-                 'login_url':reverse('customer:customer-glogin')
+                 'glogin_uri':request.build_absolute_uri(reverse('customer:customer-gloginval')),
+                 'glogin_url':request.build_absolute_uri(reverse('customer:customer-gloginval'))
                  }
 
 

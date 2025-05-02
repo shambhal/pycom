@@ -176,8 +176,8 @@ class FaltuAdmin(admin.ModelAdmin) :
              prefix='catalog/'
         files=request.FILES.getlist('file',None)   
         for file in files:
-              print(file)
-              print(file.name)
+              #print(file)
+              #print(file.name)
               jarr=str(file.name).split('.')  
               name=jarr[0]
               ext=jarr[1]  

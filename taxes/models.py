@@ -12,7 +12,7 @@ class Tax(models.Model):
     def __str__(self) -> str:
              return self.name
     name=models.CharField(blank=False,max_length=10)
-    type=models.CharField(choices=choices,default='P')
+    type=models.CharField(choices=choices,default='P', max_length=20)
     status=models.BooleanField(default=1)
     sort_order=models.IntegerField(editable=True,default=1)
     rate=models.DecimalField(blank=False,max_digits=4,decimal_places=2)

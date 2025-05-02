@@ -37,7 +37,16 @@ $(document).ready(function() {
 
 	// Product Grid
 	
+	var oc_alert = function() {
+        window.setTimeout(function() {
+            $('.alert-dismissible').fadeTo(3000, 0, function() {
+                $(this).remove();
+            });
+        }, 3000);
+    }
 
+    $(document).on('click', 'button', oc_alert);
+    $(document).on('click', 'change', oc_alert);
 	
 
 	// Checkout

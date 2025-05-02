@@ -6,7 +6,7 @@ from customer.models import Customer
 # Create your models here.
 class CheckoutKey(models.Model):
     '''checkout one time key'''
-    device_id=models.CharField(blank=True,)
+    device_id=models.CharField(blank=True,max_length=50)
     customer_id=models.IntegerField(blank=True)
     key=models.CharField(max_length=100)
     created=models.DateTimeField(default=datetime.now, blank=True)

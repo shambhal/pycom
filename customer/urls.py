@@ -25,6 +25,8 @@ urlpatterns = [
     path("register/",views.create,name="customer-create"),
     path("profile/",views.profile,name="profile"),
     path("bookings/",views.mybookings,name= 'mybookings'),
+    path("vglogin/",views.vglogin,name="vglogin"),
+    path("fblogin/",views.fblogin,name="fblogin"),
     path("edit-profile/",EditProfile.as_view(),name="edit-profile"),
     path("login/",CustomerLogin.as_view(),name="customer-login"),
     path("change-password/", auth_views.PasswordChangeView.as_view(
@@ -32,13 +34,15 @@ urlpatterns = [
             success_url = '/'
         ),name="change-password"),
     path("resetpassword/",Passrr.as_view() ,name="password-reset"),
-    path("glogin/",Glogin.as_view(),name="customer-glogin"),
+    path("glogin/",views.googlestate,name="customer-glogin"),
+     path("test/",views.test,name="customertest"),
+    path("gloginv/",Glogin.as_view(),name="customer-gloginval"),
     path("logout/",views.logout_request,name='logout'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='customer/registration/password_reset_done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="customer/registration/password_reset_confirm.html"), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='customer/registration/password_reset_complete.html'), name='password_reset_complete'),   
-    path("myaccount",views.home,name='customer-home'),
+    path("myaccount",views.home,name='customer-home')
    
-]
+            ]
 #if settings.DEBUG:
 #    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

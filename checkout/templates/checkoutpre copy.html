@@ -23,11 +23,11 @@
             
             </p>  <a href='{% url "customer:customer-create"%}'>Register Account</a>
             <p><button class='btn btn-primary' idd="custom-google-btn" onclick1='oauthSignIn()'><i class="fa fa-google"></i> Use google to create account</button></p>
-<p><button onclick="te()">Check</button> </p>
+<p><button onclick="glogin2()">Check</button> </p>
 
 
 <button id="custom-google-btn" style="background-color: #4285F4; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-size: 16px; cursor: pointer;">
-  Use google to create account 
+  
 </button>
 
           </div>
@@ -65,7 +65,6 @@
     function handleCredentialResponse(response) {
       // Decode JWT and handle user session
       console.log("Encoded JWT ID token: " + response.credential);
-      glogin2(response.credential);
       // Send this token to your backend for verification
     }
   
@@ -81,70 +80,34 @@
         google.accounts.id.prompt(); // or use one-tap
         google.accounts.id.renderButton(
           document.getElementById("custom-google-btn"), 
-          { theme: "outlines", size: "larges" } // these won't apply to your custom button, but required in init sometimes
+          { theme: "outline", size: "large" } // these won't apply to your custom button, but required in init sometimes
         );
-       google.accounts.id.prompt();
+       // google.accounts.id.prompt();
       });
     };
   </script>
 <script>
-function glogin22()
-{
 
-
-  var d='eyJhbGciOiJSUzI1NiIsImtpZCI6IjA3YjgwYTM2NTQyODUyNWY4YmY3Y2QwODQ2ZDc0YThlZTRlZjM2MjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMzY4NDgxNzI0OTgtN3Jia2g1ZjlyOWZjZzV2OTFvMmVpYTUwdGQwNm9rbDMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMzY4NDgxNzI0OTgtN3Jia2g1ZjlyOWZjZzV2OTFvMmVpYTUwdGQwNm9rbDMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTMyNTg1ODQxNzI4NDgzMjY2MzQiLCJlbWFpbCI6InNpZGRoYXJ0aHNpbmdoLmNoYXVoYW5AZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTc0NjA5NTM4MSwibmFtZSI6IlNpZGRoYXJ0aCBTaW5naCBDaGF1aGFuIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0s5dUxmc2JGamo5aDZzNXdwc3hGQTNUYjM4WUdSWjgtNHpqTWtVTXpZd1VFRFFmXzg9czk2LWMiLCJnaXZlbl9uYW1lIjoiU2lkZGhhcnRoIFNpbmdoIiwiZmFtaWx5X25hbWUiOiJDaGF1aGFuIiwiaWF0IjoxNzQ2MDk1NjgxLCJleHAiOjE3NDYwOTkyODEsImp0aSI6Ijc0YjAzM2M5NDg1NmUxMjc3MzQxZmZjZmEzMmIwYTExYzNlOTQ2YjMifQ.zy5wyjOgeGGIiN_tQu6knvrO4Si4pIjXjKsrd7RvSwaOLRdwOgY6vEkThtBLVbgb0SY1ERmY6b1PoTLvOuvzj8WWDEdzm9bkGiTw9EODUajS-nJtb55gsE2LhVK9njPtSviNELnDhbQSNBO0D6Fh7qUJSPva2ML-6M2gTISK-UpsMGjD7CnWq6wVY3092gpDI-jvOwQ0rU_wjV3dsbrZvY8RwzOpsOyVXMU_YS0NIn1Hzo33yzQ7td_Sz5IlIz_vGu9z_f08hh2_Wy4xJMH5g28mA962bFSP4w0iPeVv7arnFPjc7zgi1ihmJJd-5Xrh5vx5s6Pj2vy6phnOJtUNJQ';
-
-glogin2(d);}
-function te()
-{
-
-
-  window.location.href="https://google.com";
-}
-  function glogin2(data)
+  function glogin2()
   {
-//data='497cuHaT9Cz_KtHhJv3a9Nn3-93S-O4SVaFe-ScvLbnO18k5cZMj7EWgA9JqLvxmsYv2vlWwFxka6F8Sd7vINxrE3tn67eWuQ4Giwm4iFflv80ZFkL1lRD8_A';
+data='497cuHaT9Cz_KtHhJv3a9Nn3-93S-O4SVaFe-ScvLbnO18k5cZMj7EWgA9JqLvxmsYv2vlWwFxka6F8Sd7vINxrE3tn67eWuQ4Giwm4iFflv80ZFkL1lRD8_A';
 token='eyJhbGciOiJSUzI1NiIsImtpZCI6IjBlMzQ1ZmQ3ZTRhOTcyNzFkZmZhOTkxZjVhODkzY2QxNmI4ZTA4MjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI1ODg3MTk0NzgxMjItNDZqcHVoMGczc2RlZmxvaGU4MmJoMDEycnZzZnQ5ZzAuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1ODg3MTk0NzgxMjItNDZqcHVoMGczc2RlZmxvaGU4MmJoMDEycnZzZnQ5ZzAuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTc4Mzk4ODUwNTU2OTA1MDU5MzQiLCJlbWFpbCI6InNoYW1iaGFsbmV0d29ya3NAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTcyMTQ2NjYwNCwibmFtZSI6IlNoYW1iaGFsIE5ldHdvcmtzIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0xVQVJHNzBJNUhGSXoxYjA2c29ta0x6WTlCMHBHd05JTGRiM1Z6aDczb0pEWEtndz1zOTYtYyIsImdpdmVuX25hbWUiOiJTaGFtYmhhbCIsImZhbWlseV9uYW1lIjoiTmV0d29ya3MiLCJpYXQiOjE3MjE0NjY5MDQsImV4cCI6MTcyMTQ3MDUwNCwianRpIjoiNTIzMWE5MzZiYzM0ZDAwNDg0MzgzMmZiZTUzZDhiNzQ5N2ZlNTk3MiJ9.MPxlPZYFIxaB6cV9dxk_kA9DLGKT4wkstrMngJ2cobh4FYLNdtWL720A8DehDzVMQG16_KTIpZQCKhlcYqz7vBP589dBq8rIane22NSOU31iwp2zuCC9YT0hLBjLSzta0aPpAhh56nQljLdERie4rueAIspiVMyKLLDk8lkXbfGgKMdvFD4-KzibWjSBj8IomlOsHE_btkko4PEi6Jov9JxU70DnO6823b5r2xMGPNVgq5rStR83a9lJ0l_NGD2txDaa4yFn6PDdQPtiH6ETNypvB1eUEM9CFYKXyCm0yeC3rGVUK_YrvsTISpZTxVgKxpDnidwfOwXrIjYdmGDc7A';
 token='eyJhbGciOiJSUzI1NiIsImtpZCI6IjIzZjdhMzU4Mzc5NmY5NzEyOWU1NDE4ZjliMjEzNmZjYzBhOTY0NjIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMzY4NDgxNzI0OTgtN3Jia2g1ZjlyOWZjZzV2OTFvMmVpYTUwdGQwNm9rbDMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIxMzY4NDgxNzI0OTgtN3Jia2g1ZjlyOWZjZzV2OTFvMmVpYTUwdGQwNm9rbDMuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTc4Mzk4ODUwNTU2OTA1MDU5MzQiLCJlbWFpbCI6InNoYW1iaGFsbmV0d29ya3NAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTc0NTkzNDE3NiwibmFtZSI6IlNoYW1iaGFsIE5ldHdvcmtzIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0xVQVJHNzBJNUhGSXoxYjA2c29ta0x6WTlCMHBHd05JTGRiM1Z6aDczb0pEWEtndz1zOTYtYyIsImdpdmVuX25hbWUiOiJTaGFtYmhhbCIsImZhbWlseV9uYW1lIjoiTmV0d29ya3MiLCJpYXQiOjE3NDU5MzQ0NzYsImV4cCI6MTc0NTkzODA3NiwianRpIjoiY2VjOGMyNjkwMGE0MmE1MTI0Y2IyMTFjNzhkNmY3MTZhYTBkMWYxYSJ9.eOO5nEQ7qze21_06Y5xFrRPDCEA1GKa_RYbTBltGuAqk7i0Y4RoI3ve3-8J5EZtITfv4U32CnAXzFaM7_prrFNUnLSTlTQ2-lfcfeLAeUX5XUT1hKyxlzh3B6DWST-wZ8ws03vHd8fGezFldiCxYUVsUeBAyz3tOhnWbDFwpavoFH48Vfqwf2l4MpcOVDZRF2_SN_fl8iLs8dEQC7Noi6SkZxTfpv0Z-5xTNbjrA6OpIR_aGqPHdEoNqv4Du23KxhIQcSTNQ5CcnR1OgTQZ7epH86kSaqoZFq4YsGGECpNXI4ScxhFn-AfNwTZ_LQ238DQ-d6f1rLIDeGMNCHcMML';
 data2=JSON.parse(atob(token.split('.')[1]));
-//console.log(data2)
-//return;
+console.log(data2)
+return;
 $.ajax({
 
-  url: '{{glogin_uri}}',
+  url: '{{login_uri}}',
   method:"Post",
   type:'POST',
   headers: {'X-CSRFToken': '{{csrf_token}}'},
   data:{'credential':data},
-  dataType: 'json',
+  dataType: 'html',
   success:function(json)
   {
 
-     if(json['error'])
-     {
-
-alert(json['error']);
-return;
-
-     }
-   var  code=json['code'];
-      if(code==0)
-      {
-
-
-alert(json['msg']);
-return;
-      }
-      if(json['redirect'])
-      {
-
-alert("json redirect");
-        window.location=json['redirect'];
-      }
-      else{
-alert("not json redirect");
-
-      }
+    console.log(json);
   },
   error: function(xhr, ajaxOptions, thrownError) {
     alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -221,8 +184,23 @@ function oauthSignIn() {
   form.submit();
 }
 
- 
- 
+  function promptt()
+  {
+   // glogin2();
+ google.accounts.id.prompt();
+  }
+  window.onload1 = function () {
+    google.accounts.id.initialize({
+      client_id: '{{gci}}',
+      auto_select:false,
+       context:"signin",
+    ux_mode:"popup",
+    use_fedcm_for_prompt:true,
+      callback: glogin,
+
+    });
+    
+  };
 </script>  
 
 

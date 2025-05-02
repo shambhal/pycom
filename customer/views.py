@@ -1,5 +1,11 @@
 from warnings import resetwarnings
 from warnings import resetwarnings
+#pip install google-auth
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from google.auth.transport import requests as google_requests
+from pycom.settings import GCI
 from django.core.checks import messages
 from django.shortcuts import render,redirect
 from django.views.generic import CreateView
@@ -8,9 +14,11 @@ from .models import Customer
 from django.core.paginator import Paginator
 from service.models import Book
 from django.http import HttpResponse
+from pycom.settings import GCI
 from django.contrib.auth.models import   User
 from django.db import transaction
-
+from google.oauth2 import id_token
+from google.auth.transport import requests 
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -30,10 +38,62 @@ from django.contrib.auth.forms import AuthenticationForm #add this
 # Create your views here.
 
 from django.views import View
-
+def test(request):
+     user_email="dem@gmail.com"
+     record=User.objects.filter(email=user_email,is_staff=False)  
+     if(record.exists()):
+       user=record[0]
+       return  HttpResponse("record exists"+user.email)
+     else:
+      return HttpResponse("record does not exist")   
+     HttpResponse(record)       
+def googlestate(request):
+      return render(request=request, template_name="customer/callback.html", context={"GCI":GCI,'vgurl':request.build_absolute_uri(reverse('customer:vglogin'))})
 class Glogin(View):
      name=''
      email=''
+     def get(self,request):
+         return render(request=request, template_name="customer/callback.html", context={"GCI":GCI,'url':request.build_absolute_uri(reverse('customer:vglogin'))})
+     def gett(self,request):
+          atoken=request.GET.get('access_token') 
+          print(f'{atoken} is atoken')
+          id_info = id_token.verify_oauth2_token(atoken, requests.Request(),GCI)
+
+          user_email = id_info.get('email')
+          user_name = id_info.get('name')
+          print(user_email)
+          print(user_name)
+     def post(self,request):
+            atoken=request.POST.get('credential','') 
+            try :
+
+              id_info = id_token.verify_oauth2_token(atoken,   google_requests.Request(),GCI)
+            except Exception as e :  
+             print(e)
+             return JsonResponse({'error': 'Invalid token', 'details': str(e)}, status=400)
+          
+            user_email = id_info.get('email')
+            user_name = id_info.get('name')
+
+            #return JsonResponse(id_info)
+            record=User.objects.filter(email=user_email,is_staff=False) 
+            if(record.exists()):
+              
+               login(request,record[0])
+               if 'redirect' in request.session:
+                  rd=request.session['redirect']
+                  del request.session['redirect']  
+               else:
+                  rd=reverse('customer:customer-home')   
+               return JsonResponse({'code':1,'redirect':rd})
+            else:
+                request.session['social_user']={'name':user_name,'email':user_email}
+                messages.info(request,"You don't have account , but you can create account.")
+                return JsonResponse({'code':2,'redirect':request.build_absolute_uri(reverse('customer:customer-create'))})
+
+       
+          
+        
      def _authenticate(self,request,user):
           login(request,user)
           url=request.session.get('redirect',reverse('customer-home'))
@@ -54,7 +114,7 @@ class Glogin(View):
             request.session['g_name']=name
             return (name,email)
      @csrf_exempt       
-     def post(self,request):
+     def postt(self,request):
            c=request.POST.get('credential','')
            if(c==''):
             return JsonResponse({'msg':'Invalid Credentials'})
@@ -67,6 +127,14 @@ class Glogin(View):
               return JsonResponse({'type':'ban','name':name,'email':email})
            
            self._authenticate(request,record['user'])
+     @csrf_exempt   
+     def posttogoogle(self,request):
+          atoken=request.GET.get('access_token') 
+          id_info = id_token.verify_oauth2_token(atoken, requests.Request())
+
+          user_email = id_info.get('email')
+          user_name = id_info.get('name')
+         
 class EditProfile(View):
   def post(self,request):
       cust=Customer.objects.filter(Q(user=request.user))
@@ -209,7 +277,7 @@ class CustomerLogin(View):
             else:
                 messages.error(request,"Invalid username or password.")
                 return redirect(reverse('customer:customer-login'))
-       
+      
 @login_required
 def mybookings(request):
     qs=Book.objects.select_related('user').filter(Q(user=request.user)).order_by("-dated")
@@ -238,7 +306,50 @@ def glogin(request):
         request.session['g_email']=email
         request.session['g_name']=name
         return JsonResponse({'email':email,'name':name})
-'''
+
+        '''
+def fblogin(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            access_token = data.get('accessToken')
+            user_data = data.get('user')
+
+            # Verify token with Facebook
+            debug_url = f"https://graph.facebook.com/debug_token"
+            params = {
+                'input_token': access_token,
+                #'access_token': f"{FACEBOOK_APP_ID}|{FACEBOOK_APP_SECRET}"
+            }
+            fb_res = requests.get(debug_url, params=params).json()
+
+            if fb_res.get('data', {}).get('is_valid'):
+                # Simulate saving to DB or creating session
+                user = {
+                    'facebook_id': user_data.get('id'),
+                    'name': user_data.get('name'),
+                    'email': user_data.get('email')
+                }
+
+                # TODO: Check if user exists, create/update, start session
+                return JsonResponse({'success': True, 'user': user})
+            else:
+                return JsonResponse({'success': False, 'message': 'Invalid token'}, status=401)
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+
+    return JsonResponse({'success': False, 'message': 'Invalid method'}, status=405)
+def vglogin(request):
+          atoken=request.POST.get('access_token') 
+          print(f'{atoken} is atoken')
+          id_info = id_token.verify_oauth2_token(atoken, requests.Request())
+
+          user_email = id_info.get('email')
+          user_name = id_info.get('name')
+          print(user_email)
+          print(user_name)
+          HttpResponse(user_email+ user_name)
 @login_required
 def home(request):
   print(request.user.get_full_name())
@@ -246,7 +357,7 @@ def home(request):
 @transaction.atomic
 def create(request):
     if(request.user.is_authenticated):
-       return redirect('customer-home')
+       return redirect(reverse('customer:customer-home'))
     if(request.method=='POST'):
 
       form=CustomerForm(request.POST)
@@ -281,8 +392,10 @@ def create(request):
       return render(request,'customer/customer_form.html',context)
 
     else:
-
-      context={'form':CustomerForm()}
+      if('social_user' in request.session):
+         context={'form':CustomerForm(initial=request.session['social_user'])}
+      else:    
+       context={'form':CustomerForm()}
       return render(request,'customer/customer_form.html',context)
 
 

@@ -14,7 +14,7 @@ class Paypal(models.Model):
     email=models.CharField(blank=False,max_length=100)
     status=models.BooleanField(default=0)
     sandbox=models.BooleanField(default=1)
-    transaction=models.CharField(choices=TranStatus.choices)
+    transaction=models.CharField(choices=TranStatus.choices ,max_length=4)
     sort_order=models.IntegerField(blank=False,default=10)
     def save(self, *args, **kwargs):
           self.pk = self.id = 1
