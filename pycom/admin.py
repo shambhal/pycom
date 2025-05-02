@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.handlers.wsgi import WSGIRequest 
 class MyAdminSite(admin.AdminSite): 
     site_header = "Appointment administration"
-    def get_app_list(self, request: WSGIRequest) -> list[Any]:
+    def get_app_list(self, request: WSGIRequest) :
         app_list= super().get_app_list(request)
         models=[]
         flist=[]
