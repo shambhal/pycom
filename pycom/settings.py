@@ -38,7 +38,7 @@ CART_SESSION_ID='cartbook'
 SECRET_KEY = '&#c#(2s*u01c9#4olfxii3l1wrlz8mqv5b5xs%3cmf+6%d303('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 EMAIL_ADMIN='info@appoint.shambhalnetworks.in'
 ALLOWED_HOSTS = ['192.168.1.2','localhost','127.0.0.1','192.168.1.3']
 USE_I18N = True
