@@ -83,7 +83,7 @@ INSTALLED_APPS = [
     'service',
     'appmodules',
     'headless',
-    'mytest',
+  
      'api'
 ]
 
