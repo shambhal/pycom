@@ -37,7 +37,7 @@ urlpatterns = [
     #path("api/schedule/<int:service_id>/<string:date>/",include()),
     path("service/",include("service.urls",namespace="service")),
      path("contact/",include("contact.urls",namespace="contact")),
-    path("mytest/",include("mytest.urls",namespace="mytest")),
+    #path("mytest/",include("mytest.urls",namespace="mytest")),
     path("cart/",include("cart.urls",namespace="cart")),
      path("payment/",include("payment.urls",namespace="payment")),
     path("customer/",include("customer.urls",namespace="customer")),
