@@ -133,12 +133,14 @@ WSGI_APPLICATION = 'pycom.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 SITE_URL=env('SITE_URL')
+db_conn=env('DB_CONNECTION')
 DATABASES = {
  
 
  'default': {
-       'ENGINE': 'django.db.backends.postgresql',
+       #'ENGINE': if db_conn then 'django.db.backends.postgresql',
        #'NAME': 'postgres',
+       'ENGINE':  db_conn ,
        'NAME':env('DB_DATABASE'),
        'USER': env('DB_USERNAME'),
      'PASSWORD': env('DB_PASSWORD'),
