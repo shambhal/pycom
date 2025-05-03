@@ -41,7 +41,7 @@ SECRET_KEY = '&#c#(2s*u01c9#4olfxii3l1wrlz8mqv5b5xs%3cmf+6%d303('
 DEBUG = env('DEBUG')
 EMAIL_ADMIN='info@appoint.shambhalnetworks.in'
 #ALLOWED_HOSTS = ['192.168.1.2','localhost','127.0.0.1','192.168.1.3']
-ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS')
+ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS').split(',')
 USE_I18N = True
 USE_L10N = True
 
