@@ -10,6 +10,7 @@ class Customer(models.Model):
     phone = models.CharField(null=True, blank=True ,max_length=20)
     access=models.CharField(null=True,max_length=150)
     refresh=models.CharField(null=True,max_length=150)
+    
 class CustomerOTP(models.Model):
     
     otp = models.CharField(null=True, blank=True ,max_length=8)

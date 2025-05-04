@@ -85,11 +85,11 @@ cart_urls.del='{% url "cart:remove"%}';
       <section class="inner-page">
     <div class='container'>
       {% if messages %}
-     <ul class="messages">
+    
     {% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
     {% endfor %}
-</ul>
+
 {% endif %}
     {% block body %} 
     {% endblock body %}

@@ -23,7 +23,7 @@ def sendregmail(sender,instance,created,**kwargs):
         subject='Thanks for registering with us',
         body=message,
         from_email=EMAIL_ADMIN,
-        to=[customer_info.email],
+        to=[customer_info.user.email],
         reply_to=[EMAIL_ADMIN],
     )
     mail.content_subtype = "html"

@@ -39,14 +39,10 @@ from django.contrib.auth.forms import AuthenticationForm #add this
 
 from django.views import View
 def test(request):
-     user_email="dem@gmail.com"
-     record=User.objects.filter(email=user_email,is_staff=False)  
-     if(record.exists()):
-       user=record[0]
-       return  HttpResponse("record exists"+user.email)
-     else:
-      return HttpResponse("record does not exist")   
-     HttpResponse(record)       
+    request.session['social_user']={'name':'parsad','email':'parsad@gmail.com'}
+    request.session.save()
+    messages.info(request,"You don't have account , but you can create account.")
+    return redirect(request.build_absolute_uri(reverse('customer:customer-create')))
 def googlestate(request):
       return render(request=request, template_name="customer/callback.html", context={"GCI":GCI,'vgurl':request.build_absolute_uri(reverse('customer:vglogin'))})
 class Glogin(View):
@@ -88,6 +84,7 @@ class Glogin(View):
                return JsonResponse({'code':1,'redirect':rd})
             else:
                 request.session['social_user']={'name':user_name,'email':user_email}
+                request.session.save()
                 messages.info(request,"You don't have account , but you can create account.")
                 return JsonResponse({'code':2,'redirect':request.build_absolute_uri(reverse('customer:customer-create'))})
 
@@ -356,7 +353,7 @@ def home(request):
   return render(request,'customer/home.html',{'name':request.user.get_full_name()})
 @transaction.atomic
 def create(request):
-    if(request.user.is_authenticated):
+    if(request.user.is_authenticated and request.user.is_staff==False):
        return redirect(reverse('customer:customer-home'))
     if(request.method=='POST'):
 
