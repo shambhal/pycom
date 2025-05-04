@@ -3,6 +3,8 @@ from django.template.defaultfilters import slugify  # new
 from ckeditor.fields import RichTextField
 # Create your models here.
 class Information(models.Model):
+     def __str__(self): 
+         return self.title
      title=models.CharField( blank=False ,max_length=50)
      seo_url=models.CharField(blank=False,max_length=250,unique=True)
      content=RichTextField(blank=True)
