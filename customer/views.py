@@ -41,7 +41,7 @@ from django.views import View
 def test(request):
     request.session['social_user']={'name':'parsad','email':'parsad@gmail.com'}
     request.session.save()
-    messages.info(request,"You don't have account , but you can create account.")
+    messages.Info(request,"You don't have account , but you can create account.")
     return redirect(request.build_absolute_uri(reverse('customer:customer-create')))
 def googlestate(request):
       return render(request=request, template_name="customer/callback.html", context={"GCI":GCI,'vgurl':request.build_absolute_uri(reverse('customer:vglogin'))})
@@ -85,7 +85,7 @@ class Glogin(View):
             else:
                 request.session['social_user']={'name':user_name,'email':user_email}
                 request.session.save()
-                messages.info(request,"You don't have account , but you can create account.")
+                messages.Info(request,"You don't have account , but you can create account.")
                 return JsonResponse({'code':2,'redirect':request.build_absolute_uri(reverse('customer:customer-create'))})
 
        
@@ -220,8 +220,15 @@ class changePassword(LoginRequiredMixin, View):
      context['form']=form
      return render(request,'customer/change_password.html',context)
 '''  
+@login_required
 def profile(request):
-  return render(request,'customer/profile.html')
+  #print(request.user.)
+  #if(request.user.is_authenticated and request.user.is_staff==False)
+  if request.customer.is_authenticated :
+   return render(request,'customer/profile.html',{'name':request.user.first_name})
+  else:
+     print(request.customer)
+     return HttpResponse("Please login")
 def logout_request(request):
      logout(request)
      return render(request,"customer/logged_out.html")
@@ -234,7 +241,7 @@ def login_request(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
+                messages.Info(request, f"You are now logged in as {username}.")
                 if request.session['redirect']:
                   rd=request.session['redirect']
                   del request.session['redirect']  
@@ -264,7 +271,7 @@ class CustomerLogin(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
+                messages.Info(request, f"You are now logged in as {username}.")
                 print(request.session)
                 if 'redirect' in request.session:
                   rd=request.session['redirect']
@@ -277,7 +284,7 @@ class CustomerLogin(View):
       
 @login_required
 def mybookings(request):
-    qs=Book.objects.select_related('user').filter(Q(user=request.user)).order_by("-dated")
+    qs=Book.objects.select_related('service').filter(Q(user_id=request.user.id)).order_by("-dated")
     
     paginator = Paginator(qs, 15) # Show 25 contacts per page.
 

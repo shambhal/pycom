@@ -1,0 +1,31 @@
+{% extends "catalog/base.html" %}
+{% block title%}Profile {% endblock%}
+{% load i18n %}
+{% load  static %}
+{% block body %}
+
+<div class='container'>
+  <div class="row">
+           <div class="col-md-3 col-sm-6"><ul  class="list-group" id="cust-menu">
+              <li class="list-group-item list-group-item-action"><a href="{% url 'customer:mybookings' %}">My Bookings</a></li>
+               <li class="list-group-item list-group-item-action"><a href="{% url 'customer:change-password' %}">Change Password</a></li>  
+                  <li class="list-group-item list-group-item-action"><a href="{% url 'customer:edit-profile' %}">Edit Profile</a></li>  
+               <li class="list-group-item list-group-item-action"><a href='{% url 'customer:logout'%}'>Log Out</a></li> 
+              
+              </ul>
+                
+
+
+
+           </div>
+
+
+           <div class="col-sm-6">{% block content%} {% endblock %}</div>
+
+  </div>
+
+
+
+</div>
+
+{% endblock%}

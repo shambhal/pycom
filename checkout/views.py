@@ -169,9 +169,10 @@ class CheckoutLogin(View):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
+            print(user.email)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
+                messages.Info(request, f"You are now logged in as {username}.")
                 if request.session['redirect']:
                   rd=request.session['redirect']
                   del request.session['redirect']  
@@ -185,7 +186,7 @@ class CheckoutLogin(View):
             return redirect(reverse('checkout:login'))
     def get(self,request):
        
-       if(request.user.is_authenticated):
+       if(request.customer.is_authenticated):
          redirect(reverse('checkout:checkout')) 
        rd=request.session.get('redirect','')
        if  rd=='':

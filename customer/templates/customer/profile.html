@@ -1,14 +1,9 @@
-{% extends "catalog/base.html" %}
+{% extends "catalog/customer_base.html" %}
 {% block title%}Profile {% endblock%}
-{% load i18n %}
-{% load  static %}
-{% block body %}
-Welcome {{username}}
-<ul>
-<li><My Bookings</li>
- <li><a href="{% url 'customer:change-password' %}">Change Password</li>  
-    <li><a href="{% url 'customer:edit-profile' %}">Edit Profile</li>  
- <li><a href='{% url 'customer:logout'%}'>Log Out</a></li> 
 
-</ul>
+
+             {%block content%}Welcome {{name}}
+
+      
+
 {% endblock%}

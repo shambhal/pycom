@@ -133,7 +133,7 @@ def bookpre(request):
              cart.remove(key)
 
          '''' for going for payment gateway methods'''
-    return redirect(reverse('checkout:login'))     
+    return redirect(reverse('checkout:checkout'))     
 def booknotgood(request):
      #List msgs=[]
      gap=MINUTE_GAP

@@ -1,16 +1,16 @@
-{% extends "catalog/base.html" %}
+{% extends "catalog/customer_base.html" %}
 {% block title%}Edit Profile {% endblock%}
-{% load i18n %}
-{% load  static %}
-{% block body %}
+
+{% block content %}
 Welcome {{username}}
 <form method="post">
     {% csrf_token %}
  
     {% include 'catalog/form_field.html'%}
 
-<div class="row">
+<div class="mt-2 mb-2">
     <button class='btn btn-primary'>Submit</button>
     <div>
 </form>
+{% include "customer/lmselect.html" with index=3%}
 {% endblock%}
