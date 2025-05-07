@@ -43,8 +43,8 @@ urlpatterns = [
      path("payment/",include("payment.urls",namespace="payment")),
     path("customer/",include("customer.urls",namespace="customer")),
     
-     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+     path('vapi/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('vapi/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('accounts/', include('django.contrib.auth.urls')),
     path("", include("catalog.urls")),
     path("",include("information.urls")),
