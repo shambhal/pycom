@@ -28,7 +28,7 @@ class PaymentAdmin(admin.ModelAdmin):
         return False
  def changelist_view(self, request,extra_context=None) :
      list=self.getList()
-     print(list)
+     #print(list)
      for pg in list:
         gg= Payment.objects.all().filter(code=pg)
         if(not gg.exists()):

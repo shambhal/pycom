@@ -63,6 +63,7 @@ INSTALLED_APPS = [
      'rest_framework',
       'rest_framework_simplejwt',
      'fm',
+     'drf_spectacular',
     # "fcm_django",
      'config',
      'taxes',
@@ -177,7 +178,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [ 
         'rest_framework_simplejwt.authentication.JWTAuthentication', 
     ], 
-    'UNICODE_JSON':True
+    'UNICODE_JSON':True,
+     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 } 
 from datetime import timedelta
 

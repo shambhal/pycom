@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from .admin import admin_site
 #from customer
 from api.views import ServiceAPIView
@@ -42,7 +43,8 @@ urlpatterns = [
      path("payment/",include("payment.urls",namespace="payment")),
     path("customer/",include("customer.urls",namespace="customer")),
     
-    
+     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('accounts/', include('django.contrib.auth.urls')),
     path("", include("catalog.urls")),
     path("",include("information.urls")),
