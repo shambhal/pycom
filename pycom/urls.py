@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+'''from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
+'''
 from .admin import admin_site
 #from customer
-from api.views import ServiceAPIView
+#from api.views import ServiceAPIView
 
 #from rest_framework import routers
 #from api.views import ServiceViewSet
@@ -32,7 +34,7 @@ urlpatterns = [
     #path('summernote/', include('django_summernote.urls')),
     
     #path("api/services/",ServiceAPIView.as_view()),
-    path("api/",include("api.urls")),
+    #path("api/",include("api.urls")),
     path("headless/",include('headless.urls')),
     path("checkout/",include("checkout.urls",namespace="checkout")),
     #path("api/schedule/<int:service_id>/<string:date>/",include()),
@@ -43,8 +45,8 @@ urlpatterns = [
      path("payment/",include("payment.urls",namespace="payment")),
     path("customer/",include("customer.urls",namespace="customer")),
     
-     path('vapi/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('vapi/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+     #path('vapi/schema/', SpectacularAPIView.as_view(), name='schema'),
+    #path('vapi/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('accounts/', include('django.contrib.auth.urls')),
     path("", include("catalog.urls")),
     path("",include("information.urls")),

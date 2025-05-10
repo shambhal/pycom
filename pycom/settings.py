@@ -21,7 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 #gci id
 GCI=env('GCI')
-
+fbl=env('FBL')
+gl=env('GL')
 
 CURRENCY_SETTINGS={'locale':'en_IN','currency_code':'INR','locjs':'en-IN'}
 MEDIA_URL = '/media/'
@@ -63,7 +64,7 @@ INSTALLED_APPS = [
      'rest_framework',
       'rest_framework_simplejwt',
      'fm',
-     'drf_spectacular',
+   
     # "fcm_django",
      'config',
      'taxes',

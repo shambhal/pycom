@@ -1,6 +1,12 @@
 {% extends "catalog/base.html" %}
 {% load i18n %}
 {% block title%} {% translate "customer_add"%} {% endblock%}
+{%block extrahead%} 
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+
+{%endblock%}
+
 {% block body%}
 <div class='container'>
     {% if error %}
@@ -15,6 +21,7 @@
         <input type="submit" value="{% translate "btn_submit"%}" class='btn btn-primary'>
     </form>
 </div>
+{{social}}
 </div>
 
 {% endblock body%}   

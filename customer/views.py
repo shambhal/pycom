@@ -32,12 +32,30 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.urls import reverse
 import base64
+from pycom.settings import fbl,gl
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import AuthenticationForm #add this
 # Create your views here.
 
 from django.views import View
+def social():
+     sociala=list()
+     if fbl:
+       sociala.append('fb')
+     if gl:
+      
+       sociala.append('gl')
+
+     template = "chunk/social.html"
+   
+     c = {
+                                                    
+             'sociala':sociala ,
+             'gci':GCI
+
+         }
+     return render_to_string(template, c)   
 def test(request):
     request.session['social_user']={'name':'parsad','email':'parsad@gmail.com'}
     request.session.save()
@@ -396,10 +414,13 @@ def create(request):
       return render(request,'customer/customer_form.html',context)
 
     else:
+      print("here")
+      soc=social() 
       if('social_user' in request.session):
          context={'form':CustomerForm(initial=request.session['social_user'])}
-      else:    
-       context={'form':CustomerForm()}
+      else: 
+       print("here")
+       context={'form':CustomerForm(),'social':soc}
       return render(request,'customer/customer_form.html',context)
 
 
