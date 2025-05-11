@@ -73,13 +73,13 @@ class Glogin(View):
          return render(request=request, template_name="customer/callback.html", context={"GCI":GCI,'url':request.build_absolute_uri(reverse('customer:vglogin'))})
      def gett(self,request):
           atoken=request.GET.get('access_token') 
-          print(f'{atoken} is atoken')
+          #print(f'{atoken} is atoken')
           id_info = id_token.verify_oauth2_token(atoken, requests.Request(),GCI)
 
           user_email = id_info.get('email')
           user_name = id_info.get('name')
-          print(user_email)
-          print(user_name)
+          #print(user_email)
+          #print(user_name)
      def post(self,request):
             atoken=request.POST.get('credential','') 
             try :
