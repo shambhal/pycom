@@ -379,7 +379,7 @@ def vglogin(request):
 '''          
 @login_required
 def home(request):
-  print(request.user.get_full_name())
+  #print(request.user.get_full_name())
   return render(request,'customer/home.html',{'name':request.user.get_full_name()})
 @transaction.atomic
 def create(request):
@@ -424,7 +424,7 @@ def create(request):
       if('social_user' in request.session):
          context={'form':CustomerForm(initial=request.session['social_user'])}
       else: 
-       print("here")
+       #print("here")
        context={'form':CustomerForm(),'social':soc}
       return render(request,'customer/customer_form.html',context)
 
