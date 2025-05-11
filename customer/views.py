@@ -4,6 +4,7 @@ from warnings import resetwarnings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.middleware.csrf import get_token
 from google.auth.transport import requests as google_requests
 from pycom.settings import GCI
 from django.core.checks import messages
@@ -39,7 +40,7 @@ from django.contrib.auth.forms import AuthenticationForm #add this
 # Create your views here.
 
 from django.views import View
-def social():
+def social(request):
      sociala=list()
      if fbl:
        sociala.append('fb')
@@ -52,7 +53,8 @@ def social():
      c = {
                                                     
              'sociala':sociala ,
-             'gci':GCI
+             'gci':GCI,
+             'csrf_token': get_token(request),
 
          }
      return render_to_string(template, c)   
@@ -415,7 +417,7 @@ def create(request):
 
     else:
       print("here")
-      soc=social() 
+      soc=social(request) 
       if('social_user' in request.session):
          context={'form':CustomerForm(initial=request.session['social_user'])}
       else: 
