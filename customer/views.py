@@ -54,6 +54,7 @@ def social(request):
                                                     
              'sociala':sociala ,
              'gci':GCI,
+            'glogin_uri':request.build_absolute_uri(reverse('customer:customer-gloginval')),
              'csrf_token': get_token(request),
 
          }
@@ -364,6 +365,7 @@ def fblogin(request):
             return JsonResponse({'success': False, 'message': str(e)}, status=500)
 
     return JsonResponse({'success': False, 'message': 'Invalid method'}, status=405)
+'''
 def vglogin(request):
           atoken=request.POST.get('access_token') 
           print(f'{atoken} is atoken')
@@ -374,6 +376,7 @@ def vglogin(request):
           print(user_email)
           print(user_name)
           HttpResponse(user_email+ user_name)
+'''          
 @login_required
 def home(request):
   print(request.user.get_full_name())
@@ -416,7 +419,7 @@ def create(request):
       return render(request,'customer/customer_form.html',context)
 
     else:
-      print("here")
+      #print("here")
       soc=social(request) 
       if('social_user' in request.session):
          context={'form':CustomerForm(initial=request.session['social_user'])}
