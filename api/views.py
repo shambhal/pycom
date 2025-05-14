@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import  viewsets
 import json
+from drf_spectacular.utils import extend_schema
 from appmodules.models import CatModule 
 from django.core.paginator import Paginator
 import payment.urls
@@ -61,6 +62,7 @@ def isGOC(user):
     if(Customer.objects.all().filter(user=user)).exists():
         return 'customer'
 class ServiceAPIView(APIView):
+    @extend_schema(summary="getServices", responses={200: str})
     def get(self,request,*args,**kwargs) :
      queryset = Service.objects.all()
      serializer_context = {

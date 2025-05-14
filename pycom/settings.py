@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'contact',
     "guser",
     'customer',
+    
     'orders',
     'payment.apps.PaymentConfig',
     #'payment.gateways.cod.apps.CodConfig',
@@ -86,7 +87,7 @@ INSTALLED_APPS = [
     'service',
     'appmodules',
     'headless',
-  
+    'drf_spectacular',
      'api'
 ]
 
@@ -130,7 +131,11 @@ TEMPLATES = [
         },
     },
 ]
-
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API',
+    'DESCRIPTION': 'API for appointment',
+    'VERSION': '1.0.0',
+}
 WSGI_APPLICATION = 'pycom.wsgi.application'
 
 
