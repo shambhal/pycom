@@ -34,7 +34,7 @@ urlpatterns = [
     #path('summernote/', include('django_summernote.urls')),
     
     #path("api/services/",ServiceAPIView.as_view()),
-    #path("api/",include("api.urls")),
+    path("api/",include("api.urls")),
     path("headless/",include('headless.urls')),
     path("checkout/",include("checkout.urls",namespace="checkout")),
     #path("api/schedule/<int:service_id>/<string:date>/",include()),
