@@ -124,9 +124,9 @@ def bookpre(request):
          #date2.
          
          if(date2.fromisoformat(date)<date2.today()):
-            print(date2.fromisoformat(date))
-            print(date2.today())
-            print(f"should remove key {index}")
+            #print(date2.fromisoformat(date))
+            #print(date2.today())
+            #print(f"should remove key {index}")
             cart.remove(index)
          if(date==date2.today() and not check(hrl,minl,hr,min)):
              print("removing cart")

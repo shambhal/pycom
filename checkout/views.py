@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from orders.models import Order
 from config.helper import formatPrice,dateformat,addAP
 from orders.models import Order,OrderItems,OrderTotals
+from django.template.loader import render_to_string
+from pycom.settings import fbl,gl
 from django.core.checks import messages
 from pycom.settings import GCI
 from django.contrib.auth.forms import AuthenticationForm
@@ -162,8 +164,30 @@ def postAp(request):
          return JsonResponse({'errors':form.errors})
 def showPayments(request) :
     pass    
+def social(request):
+     sociala=list()
+     if fbl:
+       sociala.append('fb')
+     if gl:
+      
+       sociala.append('gl')
+
+     template = "chunk/social.html"
+   
+     c = {
+                                                    
+             'sociala':sociala ,
+             'gci':GCI,
+            'glogin_uri':request.build_absolute_uri(reverse('customer:customer-gloginval')),
+             'csrf_token': get_token(request),
+
+         }
+     return render_to_string(template, c)  
 class CheckoutLogin(View):
     def post(self,request):
+
+        
+
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
@@ -185,7 +209,7 @@ class CheckoutLogin(View):
             messages.error(request,"Please write credentials correctly.")
             return redirect(reverse('checkout:login'))
     def get(self,request):
-       
+       soc=social(request)
        if(request.customer.is_authenticated):
          redirect(reverse('checkout:checkout')) 
        rd=request.session.get('redirect','')
@@ -195,18 +219,22 @@ class CheckoutLogin(View):
        context={'csrf_token': get_token(request),
                  'form': AuthenticationForm(),
                  'gci':GCI,
+                 'social':soc,
                  'glogin_uri':request.build_absolute_uri(reverse('customer:customer-gloginval')),
-                 'glogin_url':request.build_absolute_uri(reverse('customer:customer-gloginval'))
+              
                  }
 
 
        
        return render(request,'checkoutpre.html',context) 
+  
 class CheckoutView(View):
     
 
 
     def get(self,request):
+        if(not request.customer.is_authenticated):
+           return redirect('checkout:login')
         ap=request.session.get("appointee",'')
         if ap == '' :
             return redirect('checkout:appointee')

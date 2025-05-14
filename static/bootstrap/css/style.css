@@ -1303,13 +1303,14 @@ section {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  background: #111111;
+  background: #1d1d1d;
   padding: 0 0 30px 0;
   color: #fff;
   font-size: 13px;
 }
 #footer .footer-top {
-  background: #1d1d1d;
+  
+    background: linear-gradient(to right blue red);
   border-bottom: 1px solid #2f2f2f;
   padding: 60px 0 30px 0;
 }
