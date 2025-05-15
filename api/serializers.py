@@ -5,6 +5,10 @@ from cart.models import AppCart
 from customer.models import Customer
 from django.contrib.auth.models import User
 from orders.models import Order
+# for delete cart serializer
+class DCSerializer(serializers.Serializer):
+    cart_id=serializers.IntegerField()
+
 class ServiceSerializer(serializers.ModelSerializer):
   
     class Meta:

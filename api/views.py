@@ -2,7 +2,7 @@ from django.http.response import HttpResponse
 from api.serializers import ServiceSerializer,ChangePasswordSerializer,BookHistorySerializer
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
-
+#from rest_framework import serializers
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import  viewsets
@@ -43,7 +43,7 @@ from orders.models import Order,OrderItems,OrderTotals
 from payment.models import Payment
 from django.apps import apps
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .serializers import OrderSerializer,ASerializer
+from .serializers import OrderSerializer,ASerializer,DCSerializer
 from .serializers import ServiceSerializer,LoginSerializer,PaymentMethodSerializer,CartSerializer,RegisterSerializer
 dayarr=['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
 logger = logging.getLogger(__name__)
@@ -76,10 +76,11 @@ class ServiceAPIView(APIView):
      return Response(serializer.data)
 
      
-    
+
+
 class DeleteCartView(APIView):
     permission_classes = [IsLoggedInUserOrAdmin]
-    @extend_schema(summary="Delete Cart",  parameters=[OpenApiParameter(name='cart_id', description='Cart Id', required=True, type=int),],  responses={200: str})
+    @extend_schema(summary="Delete Cart", request=DCSerializer, description='Cart Id to delete',   responses={200: str})
     def post(self,request,*args,**kwargs):
         cart_id=request.data['cart_id']
         device_id=request.data['device_id']
