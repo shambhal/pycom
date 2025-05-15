@@ -1,10 +1,14 @@
 from django.http.response import HttpResponse
 from api.serializers import ServiceSerializer,ChangePasswordSerializer,BookHistorySerializer
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.types import OpenApiTypes
+
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import  viewsets
 import json
 from drf_spectacular.utils import extend_schema
+from api.permissions import IsLoggedInUserOrAdmin
 from appmodules.models import CatModule 
 from django.core.paginator import Paginator
 import payment.urls
@@ -74,6 +78,8 @@ class ServiceAPIView(APIView):
      
     
 class DeleteCartView(APIView):
+    permission_classes = [IsLoggedInUserOrAdmin]
+    @extend_schema(summary="Delete Cart", auth=["tokenAuth"], parameters=[OpenApiParameter(name='cart_id', description='Cart Id', required=True, type=int),],  responses={200: str})
     def post(self,request,*args,**kwargs):
         cart_id=request.data['cart_id']
         device_id=request.data['device_id']
@@ -111,6 +117,8 @@ class RegenerateKey(APIView):
                 'customer_id':user.id}
                 return Response({'access':gu.access,'refresh':gu.refresh,'success':1,'type':'customer','info':info})
 class BookView(APIView)  :
+ permission_classes = [IsLoggedInUserOrAdmin]
+ @extend_schema(summary="Book Order", auth=["tokenAuth"], parameters=[OpenApiParameter(name='order', description='Order Id', required=True, type=int),],  responses={200: str})
  def post(self,request,*args,**kwargs) :
       order_id= request.data['order'] 
       order=Order.objects.get(pk=order_id)

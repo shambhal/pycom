@@ -4,8 +4,11 @@ from rest_framework import permissions
 class IsLoggedInUserOrAdmin(permissions.BasePermission):
     
     def has_object_permission(self, request, view, obj):
-        return obj == request.user or request.user.is_staff
+       
+        if request.user.is_superuser:
+            return True
 
+        return obj.owner==request.user 
 
 class IsAdminUser(permissions.BasePermission):
 
@@ -13,4 +16,8 @@ class IsAdminUser(permissions.BasePermission):
         return request.user and request.user.is_staff
 
     def has_object_permission(self, request, view, obj):
-        return request.user and request.user.is_staff
+        if request.user.is_superuser:
+            return True
+
+        return obj.owner==request.user
+      
