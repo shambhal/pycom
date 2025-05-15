@@ -78,7 +78,7 @@ class ServiceAPIView(APIView):
      
     
 class DeleteCartView(APIView):
-    #permission_classes = [IsLoggedInUserOrAdmin]
+    permission_classes = [IsLoggedInUserOrAdmin]
     @extend_schema(summary="Delete Cart",  parameters=[OpenApiParameter(name='cart_id', description='Cart Id', required=True, type=int),],  responses={200: str})
     def post(self,request,*args,**kwargs):
         cart_id=request.data['cart_id']
