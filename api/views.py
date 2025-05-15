@@ -83,7 +83,7 @@ class DeleteCartView(APIView):
     @extend_schema(summary="Delete Cart", request=DCSerializer, description='Cart Id to delete',   responses={200: str})
     def post(self,request,*args,**kwargs):
         cart_id=request.data['cart_id']
-        device_id=request.data['device_id']
+        #device_id=request.data['device_id']
         AppCart.objects.filter(id=cart_id).delete()
         return JsonResponse({'success':1})
 class RegenerateKey(APIView):
