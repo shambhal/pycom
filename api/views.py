@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse
-from api.serializers import ServiceSerializer,ChangePasswordSerializer,BookHistorySerializer
+from api.serializers import BoapiSerializer,ServiceSerializer,ChangePasswordSerializer,BookHistorySerializer
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 #from rest_framework import serializers
@@ -66,7 +66,7 @@ def isGOC(user):
     if(Customer.objects.all().filter(user=user)).exists():
         return 'customer'
 class ServiceAPIView(APIView):
-    @extend_schema(summary="getServices", responses={200: str})
+    @extend_schema(summary="This lets you get the list of all services offered by us", responses={200: str})
     def get(self,request,*args,**kwargs) :
      queryset = Service.objects.all()
      serializer_context = {
@@ -80,7 +80,7 @@ class ServiceAPIView(APIView):
 
 class DeleteCartView(APIView):
     permission_classes = [IsLoggedInUserOrAdmin]
-    @extend_schema(summary="Delete Cart", request=DCSerializer, description='Cart Id to delete',   responses={200: str})
+    @extend_schema(summary="Delete Cart Item", request=DCSerializer, description='This deletes the cart item',   responses={200: str})
     def post(self,request,*args,**kwargs):
         cart_id=request.data['cart_id']
         #device_id=request.data['device_id']
@@ -119,7 +119,7 @@ class RegenerateKey(APIView):
                 return Response({'access':gu.access,'refresh':gu.refresh,'success':1,'type':'customer','info':info})
 class BookView(APIView)  :
  permission_classes = [IsLoggedInUserOrAdmin]
- @extend_schema(summary="Book Order", auth=["tokenAuth"], parameters=[OpenApiParameter(name='order', description='Order Id', required=True, type=int),],  responses={200: str})
+ @extend_schema(summary="Book Order", request=BoapiSerializer,description=" Book Order", responses={200: str})
  def post(self,request,*args,**kwargs) :
       order_id= request.data['order'] 
       order=Order.objects.get(pk=order_id)
@@ -140,7 +140,8 @@ class BookView(APIView)  :
           b.save()
           
       return JsonResponse({'success':1}) 
-class CatListView(APIView):  
+class CatListView(APIView): 
+    @extend_schema(summary="List Category", description=" List All categories", responses={200: str}) 
     def get(self,request,*args,**kwargs):
         records=Service.objects.all().order_by("name")
         page_number = self.request.query_params.get('page', 1)
@@ -152,6 +153,7 @@ class CatListView(APIView):
         #return JsonResponse({'total':paginator.count,'currentpage':page_number,'totalpages':paginator.num_pages,'data':serializer.data})
         return Response({'total':paginator.count,'data':serializer.data,'totalpages':paginator.num_pages,'currentpage':page_number})
 class ServiceSlotsView(APIView):
+ @extend_schema(summary="Slots of particular Service", description="Slot of particular Service", responses={200: str}) 
  def get(self,request,*args,**kwargs):
    ''''SLOTS DAY SERVICE'''
    sparr=[]
