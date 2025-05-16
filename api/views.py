@@ -153,7 +153,13 @@ class CatListView(APIView):
         #return JsonResponse({'total':paginator.count,'currentpage':page_number,'totalpages':paginator.num_pages,'data':serializer.data})
         return Response({'total':paginator.count,'data':serializer.data,'totalpages':paginator.num_pages,'currentpage':page_number})
 class ServiceSlotsView(APIView):
- @extend_schema(summary="Slots of particular Service",request=ServiceSlotSerializer, description="Slot of particular Service", responses={200: str}) 
+ @extend_schema(summary="Slots of particular Service",
+                parameters=[ OpenApiParameter("service_id", type=int, location= OpenApiParameter.QUERY,required=True),
+                            
+                            OpenApiParameter("dated", type=str,location= OpenApiParameter.QUERY,description=" A valid date ,if not given, current date will be taken automatically"),
+                                                                  
+                                                                  
+                                                                  ], description="Slot of particular Service", responses={200: str}) 
  def get(self,request,*args,**kwargs):
    ''''SLOTS DAY SERVICE'''
    sparr=[]

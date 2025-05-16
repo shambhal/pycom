@@ -8,9 +8,11 @@ from orders.models import Order
 # for delete cart serializer
 class DCSerializer(serializers.Serializer):
     cart_id=serializers.IntegerField(required=True)
+'''
 class ServiceSlotSerializer(serializers.Serializer):
     service_id=serializers.IntegerField(required=True)   
     dated=serializers.CharField() 
+ '''   
 class BoapiSerializer(serializers.Serializer):
     '''
     Serializer just for documentation
