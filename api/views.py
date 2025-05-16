@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse
-from api.serializers import BoapiSerializer,ServiceSerializer,ChangePasswordSerializer,BookHistorySerializer
+from api.serializers import ServiceSlotSerializer, BoapiSerializer,ServiceSerializer,ChangePasswordSerializer,BookHistorySerializer
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 #from rest_framework import serializers
@@ -153,7 +153,7 @@ class CatListView(APIView):
         #return JsonResponse({'total':paginator.count,'currentpage':page_number,'totalpages':paginator.num_pages,'data':serializer.data})
         return Response({'total':paginator.count,'data':serializer.data,'totalpages':paginator.num_pages,'currentpage':page_number})
 class ServiceSlotsView(APIView):
- @extend_schema(summary="Slots of particular Service", description="Slot of particular Service", responses={200: str}) 
+ @extend_schema(summary="Slots of particular Service",request:ServiceSlotSerializer, description="Slot of particular Service", responses={200: str}) 
  def get(self,request,*args,**kwargs):
    ''''SLOTS DAY SERVICE'''
    sparr=[]
