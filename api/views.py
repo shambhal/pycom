@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse
-from api.serializers import ServiceSlotSerializer, BoapiSerializer,ServiceSerializer,ChangePasswordSerializer,BookHistorySerializer
+from api.serializers import  BoapiSerializer,ServiceSerializer,ChangePasswordSerializer,BookHistorySerializer
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 #from rest_framework import serializers
