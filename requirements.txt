@@ -1,8 +1,14 @@
 django-environ
-django_mysql
+#django_mysql
 djangorestframework
 djangorestframework-simplejwt
 django-ckeditor
 mysqlclient
 pillow
 django-babel
+Django
+gunicorn
+
+drf-spectacular
+#psycopg2
+google-auth
